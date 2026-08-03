@@ -42,6 +42,14 @@
     return String(value || "").replace(/[^\d+]/g, "");
   }
 
+  function isLikelyMobileDevice() {
+    const userAgent = navigator.userAgent || "";
+    const isAppleTouchDevice = /Macintosh/.test(userAgent) && navigator.maxTouchPoints > 1;
+    return /Android|iPhone|iPad|iPod|Windows Phone/i.test(userAgent) || isAppleTouchDevice;
+  }
+
+  const smsCapable = isLikelyMobileDevice();
+
   function wireContactLinks() {
     const phone = cleanPhone(cfg.publicPhone);
     const email = String(cfg.publicEmail || "").trim();
@@ -50,7 +58,16 @@
     document.querySelectorAll(".contact-link").forEach(link => {
       const type = link.dataset.contact;
       if (phone && type === "call") link.href = `tel:${phone}`;
-      else if (phone && type === "text") link.href = `sms:${phone}`;
+      else if (phone && type === "text") {
+        if (smsCapable) link.href = `sms:${phone}`;
+        else {
+          link.href = "#contact";
+          link.title = `Text Rayzart at ${cfg.publicPhone} from your phone`;
+          if (link.textContent.trim().toLowerCase().startsWith("text")) {
+            link.textContent = `Text ${cfg.publicPhone}`;
+          }
+        }
+      }
       else if (email && type === "email") link.href = `mailto:${email}`;
       else link.href = "#contact";
     });
@@ -81,17 +98,18 @@
     ].join("\n");
 
     const phone = cleanPhone(cfg.publicPhone);
-    if (phone) {
+    if (phone && smsCapable) {
       window.location.href = `sms:${phone}?&body=${encodeURIComponent(request)}`;
       status.textContent = "Your text message is ready. Sending it does not confirm the reservation.";
       return;
     }
 
+    const desktopRequest = `${request}\n\nSend to Rayzart at ${cfg.publicPhone}`;
     try {
-      await navigator.clipboard.writeText(request);
-      status.textContent = "Request copied. The public Rayzart phone number will be connected before launch; dates are not yet confirmed.";
+      await navigator.clipboard.writeText(desktopRequest);
+      status.textContent = `Request copied. Send it by text to ${cfg.publicPhone}.`;
     } catch {
-      status.textContent = "Request prepared. The public Rayzart phone number still needs to be connected before launch.";
+      status.textContent = `Request prepared. Send it by text to ${cfg.publicPhone}.`;
     }
   });
 })();
