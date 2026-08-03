@@ -1,0 +1,94 @@
+
+(() => {
+  const cfg = window.RAYZART_CONFIG || {};
+  const menuButton = document.querySelector(".menu-toggle");
+  const nav = document.querySelector(".main-nav");
+
+  menuButton?.addEventListener("click", () => {
+    const open = menuButton.getAttribute("aria-expanded") === "true";
+    menuButton.setAttribute("aria-expanded", String(!open));
+    nav?.classList.toggle("open", !open);
+  });
+
+  nav?.querySelectorAll("a").forEach(a => a.addEventListener("click", () => {
+    nav.classList.remove("open");
+    menuButton?.setAttribute("aria-expanded", "false");
+  }));
+
+  document.getElementById("year").textContent = new Date().getFullYear();
+
+  // Prevent end dates before start dates.
+  const startDate = document.getElementById("start-date");
+  const endDate = document.getElementById("end-date");
+  const today = new Date();
+  const localToday = new Date(today.getTime() - today.getTimezoneOffset() * 60000).toISOString().split("T")[0];
+  if (startDate) startDate.min = localToday;
+  if (endDate) endDate.min = localToday;
+
+  startDate?.addEventListener("change", () => {
+    endDate.min = startDate.value || localToday;
+    if (endDate.value && endDate.value < startDate.value) endDate.value = startDate.value;
+  });
+
+  // Trailer card buttons populate the availability form.
+  document.querySelectorAll(".select-trailer").forEach(link => {
+    link.addEventListener("click", () => {
+      const select = document.getElementById("trailer");
+      if (select) select.value = link.dataset.trailer || "";
+    });
+  });
+
+  function cleanPhone(value) {
+    return String(value || "").replace(/[^\d+]/g, "");
+  }
+
+  function wireContactLinks() {
+    const phone = cleanPhone(cfg.publicPhone);
+    const email = String(cfg.publicEmail || "").trim();
+    const note = document.getElementById("contact-note");
+
+    document.querySelectorAll(".contact-link").forEach(link => {
+      const type = link.dataset.contact;
+      if (phone && type === "call") link.href = `tel:${phone}`;
+      else if (phone && type === "text") link.href = `sms:${phone}`;
+      else if (email) link.href = `mailto:${email}`;
+      else link.href = "#contact";
+    });
+
+    if (note && (phone || email)) {
+      note.textContent = phone ? `Call or text ${cfg.publicPhone}` : `Email ${email}`;
+    }
+  }
+  wireContactLinks();
+
+  // Request builder. It never claims dates are available.
+  const form = document.getElementById("availability-form");
+  const status = document.getElementById("form-status");
+
+  form?.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const data = new FormData(form);
+    const request = [
+      `Rayzart availability request`,
+      `Name: ${data.get("name")}`,
+      `Phone: ${data.get("phone")}`,
+      `Trailer: ${data.get("trailer")}`,
+      `Dates: ${data.get("startDate")} through ${data.get("endDate")}`,
+      `Project: ${data.get("project") || "Not provided"}`
+    ].join("\n");
+
+    const phone = cleanPhone(cfg.publicPhone);
+    if (phone) {
+      window.location.href = `sms:${phone}?&body=${encodeURIComponent(request)}`;
+      status.textContent = "Your text message is ready. Sending it does not confirm the reservation.";
+      return;
+    }
+
+    try {
+      await navigator.clipboard.writeText(request);
+      status.textContent = "Request copied. The public Rayzart phone number will be connected before launch; dates are not yet confirmed.";
+    } catch {
+      status.textContent = "Request prepared. The public Rayzart phone number still needs to be connected before launch.";
+    }
+  });
+})();

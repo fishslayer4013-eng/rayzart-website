@@ -1,0 +1,16 @@
+RAYZART WEBSITE V1 — ITEMS STILL NEEDING CONFIRMATION
+
+The website is built, but it is intentionally not marked ready for public launch until these are confirmed:
+
+- Public business phone number
+- Public business email
+- Final domain name
+- Exact specifications for the 23 Deck Trailer
+- Whether the $200 deposit applies to all trailers or only selected rentals
+- Current delivery pricing/radius
+- Whether the dump trailer requires the same hitch/brake-controller wording shown for deck trailers
+- Additional real trailer photos
+- Google Calendar availability connection
+- Privacy/contact-form terms if an online form is connected
+
+No customer names, private rental details, addresses, financial totals, or internal RBMS information were placed on the public website.
