@@ -51,12 +51,15 @@
       const type = link.dataset.contact;
       if (phone && type === "call") link.href = `tel:${phone}`;
       else if (phone && type === "text") link.href = `sms:${phone}`;
-      else if (email) link.href = `mailto:${email}`;
+      else if (email && type === "email") link.href = `mailto:${email}`;
       else link.href = "#contact";
     });
 
     if (note && (phone || email)) {
-      note.textContent = phone ? `Call or text ${cfg.publicPhone}` : `Email ${email}`;
+      const contactMethods = [];
+      if (phone) contactMethods.push(`Call or text ${cfg.publicPhone}`);
+      if (email) contactMethods.push(`Email ${email}`);
+      note.textContent = contactMethods.join(" • ");
     }
   }
   wireContactLinks();
