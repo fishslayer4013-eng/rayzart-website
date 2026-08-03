@@ -33,7 +33,7 @@ button{cursor:pointer}
 .brand{display:flex;align-items:center;gap:12px;text-decoration:none}
 .brand img{width:54px;height:54px;object-fit:contain}
 .brand span{display:flex;flex-direction:column;line-height:1.05}
-.brand strong{font-family:"Arial Black","Segoe UI Black","Arial",sans-serif;font-size:1.3rem;font-weight:900;letter-spacing:.075em;color:var(--navy)}
+.brand strong{font-family:"Arial Black","Segoe UI Black","Arial",sans-serif;font-size:1.3rem;font-weight:900;letter-spacing:.075em;color:var(--blue)}
 .brand-llc{font-size:.56em;letter-spacing:.08em;margin-left:.28em;vertical-align:.24em}
 .brand small{font-size:.72rem;margin-top:6px;color:var(--muted);letter-spacing:.04em}
 .main-nav{display:flex;align-items:center;gap:26px}
