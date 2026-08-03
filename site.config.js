@@ -1,9 +1,9 @@
 window.RAYZART_CONFIG = {
   businessName: "Rayzart Diversified Services LLC",
   shortName: "Rayzart",
-  publicPhone: "",
+  publicPhone: "208-691-2496",
   publicEmail: "",
-  websiteUrl: "",
+  websiteUrl: "https://fishslayer4013-eng.github.io/rayzart-website/",
   pickupLocation: "Hauser, Idaho",
   serviceArea: "North Idaho & the Spokane Area"
 };
