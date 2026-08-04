@@ -32,6 +32,7 @@
   // Prevent end dates before start dates.
   const startDate = document.getElementById("start-date");
   const endDate = document.getElementById("end-date");
+  const trailerSelect = document.getElementById("trailer");
   const today = new Date();
   const localToday = new Date(today.getTime() - today.getTimezoneOffset() * 60000).toISOString().split("T")[0];
   if (startDate) startDate.min = localToday;
@@ -40,13 +41,177 @@
   startDate?.addEventListener("change", () => {
     endDate.min = startDate.value || localToday;
     if (endDate.value && endDate.value < startDate.value) endDate.value = startDate.value;
+    updateDateCheck();
   });
+
+  endDate?.addEventListener("change", updateDateCheck);
+
+  const availability = window.RAYZART_AVAILABILITY || { bookings: [] };
+  const bookings = Array.isArray(availability.bookings) ? availability.bookings : [];
+  const calendarGrid = document.getElementById("calendar-grid");
+  const calendarMonth = document.getElementById("calendar-month");
+  const calendarTrailer = document.getElementById("calendar-trailer");
+  const calendarPrev = document.getElementById("calendar-prev");
+  const calendarNext = document.getElementById("calendar-next");
+  const calendarUpdated = document.getElementById("calendar-updated");
+  const dateCheck = document.getElementById("date-check");
+  const firstViewMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+  const lastViewMonth = new Date(today.getFullYear(), today.getMonth() + 11, 1);
+  let viewMonth = new Date(firstViewMonth);
+
+  function dateToIso(date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  }
+
+  function dateFromIso(value) {
+    const [year, month, day] = String(value || "").split("-").map(Number);
+    return new Date(year, month - 1, day, 12);
+  }
+
+  function isDeckTrailer(trailer) {
+    return trailer === "23 Deck Trailer" || trailer === "26 Deck Trailer";
+  }
+
+  function bookingApplies(booking, trailer, isoDate) {
+    const trailerMatches = booking.trailer === trailer || (booking.trailer === "Deck Trailers" && isDeckTrailer(trailer));
+    return trailerMatches && isoDate >= booking.start && isoDate <= booking.end;
+  }
+
+  function statusForDate(trailer, isoDate) {
+    const matches = bookings.filter(booking => bookingApplies(booking, trailer, isoDate));
+    if (matches.some(booking => booking.status === "booked" && booking.trailer === trailer)) return "booked";
+    if (matches.some(booking => booking.status === "booked")) return "booked";
+    if (matches.length) return "limited";
+    return "open";
+  }
+
+  function statusForRange(trailer, start, end) {
+    if (!isDeckTrailer(trailer) && trailer !== "26 Dump Trailer") return "unknown";
+    if (!start || !end || end < start) return "unknown";
+    let rangeStatus = "open";
+    const cursor = dateFromIso(start);
+    const finalDate = dateFromIso(end);
+    for (let guard = 0; cursor <= finalDate && guard < 370; guard += 1) {
+      const dayStatus = statusForDate(trailer, dateToIso(cursor));
+      if (dayStatus === "booked") return "booked";
+      if (dayStatus === "limited") rangeStatus = "limited";
+      cursor.setDate(cursor.getDate() + 1);
+    }
+    return rangeStatus;
+  }
+
+  function updateDateCheck() {
+    if (!dateCheck) return;
+    const rangeStatus = statusForRange(trailerSelect?.value, startDate?.value, endDate?.value);
+    dateCheck.className = "date-check";
+    if (rangeStatus === "booked") {
+      dateCheck.classList.add("booked");
+      dateCheck.textContent = "These dates include a booked date for this trailer. You can still ask Rayzart about another date.";
+    } else if (rangeStatus === "limited") {
+      dateCheck.classList.add("limited");
+      dateCheck.textContent = "Availability is limited on at least one selected date. Rayzart will check which deck trailer is open.";
+    } else if (rangeStatus === "open") {
+      dateCheck.classList.add("open");
+      dateCheck.textContent = "No booking is currently shown for these dates. Rayzart will give the final confirmation.";
+    } else {
+      dateCheck.textContent = "Select a trailer and dates to check the calendar.";
+    }
+  }
+
+  function renderCalendar() {
+    if (!calendarGrid || !calendarMonth || !calendarTrailer) return;
+    const trailer = calendarTrailer.value;
+    const monthName = viewMonth.toLocaleDateString("en-US", { month: "long", year: "numeric" });
+    calendarMonth.textContent = monthName;
+    calendarGrid.replaceChildren();
+
+    ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].forEach(day => {
+      const label = document.createElement("div");
+      label.className = "calendar-weekday";
+      label.textContent = day;
+      label.setAttribute("role", "columnheader");
+      calendarGrid.appendChild(label);
+    });
+
+    const firstDay = new Date(viewMonth.getFullYear(), viewMonth.getMonth(), 1).getDay();
+    const daysInMonth = new Date(viewMonth.getFullYear(), viewMonth.getMonth() + 1, 0).getDate();
+    for (let blank = 0; blank < firstDay; blank += 1) {
+      const spacer = document.createElement("div");
+      spacer.className = "calendar-empty";
+      spacer.setAttribute("aria-hidden", "true");
+      calendarGrid.appendChild(spacer);
+    }
+
+    for (let day = 1; day <= daysInMonth; day += 1) {
+      const date = new Date(viewMonth.getFullYear(), viewMonth.getMonth(), day, 12);
+      const isoDate = dateToIso(date);
+      const dateStatus = statusForDate(trailer, isoDate);
+      const isPast = isoDate < localToday;
+      const label = dateStatus === "booked" ? "Booked" : dateStatus === "limited" ? "Limited" : "No booking";
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = `calendar-day ${dateStatus}${isoDate === localToday ? " today" : ""}${isPast ? " past" : ""}`;
+      button.disabled = isPast;
+      button.innerHTML = `<span>${day}</span><span class="calendar-status">${label}</span>`;
+      button.setAttribute("role", "gridcell");
+      button.setAttribute("aria-label", `${date.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}: ${label}`);
+      button.addEventListener("click", () => {
+        if (trailerSelect) trailerSelect.value = trailer;
+        if (startDate) startDate.value = isoDate;
+        if (endDate) {
+          endDate.min = isoDate;
+          endDate.value = isoDate;
+        }
+        updateDateCheck();
+        document.getElementById("availability-form")?.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+      calendarGrid.appendChild(button);
+    }
+
+    if (calendarPrev) calendarPrev.disabled = viewMonth <= firstViewMonth;
+    if (calendarNext) calendarNext.disabled = viewMonth >= lastViewMonth;
+  }
+
+  if (calendarUpdated && availability.updated) {
+    calendarUpdated.textContent = dateFromIso(availability.updated).toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric"
+    });
+  }
+
+  calendarPrev?.addEventListener("click", () => {
+    viewMonth = new Date(viewMonth.getFullYear(), viewMonth.getMonth() - 1, 1);
+    renderCalendar();
+  });
+
+  calendarNext?.addEventListener("click", () => {
+    viewMonth = new Date(viewMonth.getFullYear(), viewMonth.getMonth() + 1, 1);
+    renderCalendar();
+  });
+
+  calendarTrailer?.addEventListener("change", renderCalendar);
+  trailerSelect?.addEventListener("change", () => {
+    if (calendarTrailer && (isDeckTrailer(trailerSelect.value) || trailerSelect.value === "26 Dump Trailer")) {
+      calendarTrailer.value = trailerSelect.value;
+      renderCalendar();
+    }
+    updateDateCheck();
+  });
+
+  renderCalendar();
 
   // Trailer card buttons populate the availability form.
   document.querySelectorAll(".select-trailer").forEach(link => {
     link.addEventListener("click", () => {
       const select = document.getElementById("trailer");
-      if (select) select.value = link.dataset.trailer || "";
+      if (select) {
+        select.value = link.dataset.trailer || "";
+        select.dispatchEvent(new Event("change"));
+      }
     });
   });
 
@@ -100,12 +265,15 @@
   form?.addEventListener("submit", async (event) => {
     event.preventDefault();
     const data = new FormData(form);
+    const calendarStatus = statusForRange(data.get("trailer"), data.get("startDate"), data.get("endDate"));
+    const calendarSummary = calendarStatus === "booked" ? "Booked date shown" : calendarStatus === "limited" ? "Limited date shown" : "No booking shown — confirmation required";
     const request = [
       `Rayzart availability request`,
       `Name: ${data.get("name")}`,
       `Phone: ${data.get("phone")}`,
       `Trailer: ${data.get("trailer")}`,
       `Dates: ${data.get("startDate")} through ${data.get("endDate")}`,
+      `Website calendar: ${calendarSummary}`,
       `Project: ${data.get("project") || "Not provided"}`
     ].join("\n");
 
