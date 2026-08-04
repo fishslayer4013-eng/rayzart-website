@@ -275,17 +275,9 @@
         <div>
           <span class="section-kicker light">Trailer availability</span>
           <h2>See booked dates before you ask.</h2>
-          <p>Choose a trailer to view its calendar. Customer names and private details are never shown. Rayzart still confirms every rental personally.</p>
+          <p>See all three trailers together. Each booked date is labeled and color coded, while customer names and private details remain hidden. Rayzart still confirms every rental personally.</p>
 
           <div class="availability-calendar" id="availability-calendar">
-            <div class="calendar-toolbar">
-              <label for="calendar-trailer">Show</label>
-              <select id="calendar-trailer">
-                <option>23 Deck Trailer</option>
-                <option>26 Deck Trailer</option>
-                <option>26 Dump Trailer</option>
-              </select>
-            </div>
             <div class="calendar-month-bar">
               <button id="calendar-prev" type="button" aria-label="Previous month">‹</button>
               <h3 id="calendar-month" aria-live="polite"></h3>
@@ -293,11 +285,11 @@
             </div>
             <div class="calendar-grid" id="calendar-grid" role="grid" aria-label="Trailer booking calendar"></div>
             <div class="calendar-legend" aria-label="Calendar key">
-              <span><i class="legend-open"></i>No booking shown</span>
-              <span><i class="legend-limited"></i>Limited</span>
-              <span><i class="legend-booked"></i>Booked</span>
+              <span><i class="legend-23"></i>23 Deck</span>
+              <span><i class="legend-26"></i>26 Deck</span>
+              <span><i class="legend-dump"></i>26 Dump</span>
             </div>
-            <p class="calendar-note">Click a date to put it in the request form. “Limited” means one deck trailer may already be booked. Last updated <span id="calendar-updated"></span>.</p>
+            <p class="calendar-note">A colored trailer label means that trailer is booked that day. Click any date to put it in the request form. Last updated <span id="calendar-updated"></span>.</p>
           </div>
 
           <div class="process">
