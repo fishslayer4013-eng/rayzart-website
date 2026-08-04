@@ -8,16 +8,16 @@ window.RAYZART_AVAILABILITY = {
       status: "booked"
     },
     {
-      trailer: "Deck Trailers",
+      trailer: "26 Deck Trailer",
       start: "2026-08-06",
       end: "2026-08-06",
-      status: "limited"
+      status: "booked"
     },
     {
-      trailer: "Deck Trailers",
+      trailer: "23 Deck Trailer",
       start: "2026-08-21",
       end: "2026-08-23",
-      status: "limited"
+      status: "booked"
     }
   ]
 };
