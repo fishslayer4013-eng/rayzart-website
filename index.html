@@ -47,7 +47,7 @@
   <link rel="stylesheet" href="assets/styles.css?v=20260804-2">
   <script src="site.config.js"></script>
   <script src="availability-data.js"></script>
-  <script defer src="assets/app.js?v=20260804-2"></script>
+  <script defer src="assets/app.js?v=20260804-3"></script>
 
   <style>
     #dump-trailer .card-image img,
@@ -69,19 +69,16 @@
     }
   
     .reviews-section{background:#f4f7fb}
-    .reviews-layout{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(280px,.75fr);gap:28px;align-items:stretch;margin-top:38px}
-    .review-card,.review-next{border-radius:22px;padding:32px}
-    .review-card{background:#fff;border:1px solid var(--line);box-shadow:0 14px 38px rgba(20,49,77,.09)}
+    .reviews-layout{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px;align-items:stretch;margin-top:38px}
+    .review-card{border-radius:22px;padding:32px;background:#fff;border:1px solid var(--line);box-shadow:0 14px 38px rgba(20,49,77,.09);display:flex;flex-direction:column}
     .review-stars{color:#f4b223;letter-spacing:.16em;font-size:1.15rem}
-    .review-card blockquote{margin:18px 0 20px;color:var(--navy);font-size:clamp(1.3rem,2vw,1.75rem);line-height:1.45;font-weight:700}
+    .review-card blockquote{margin:18px 0 20px;color:var(--navy);font-size:clamp(1.15rem,1.7vw,1.45rem);line-height:1.5;font-weight:700}
     .review-source{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;color:var(--muted);font-size:.9rem}
+    .review-card .review-source{margin-top:auto}
     .review-source strong{color:var(--navy)}
     .review-source a{color:var(--blue);font-weight:700}
-    .review-next{background:var(--navy);color:#fff;display:flex;flex-direction:column;justify-content:center}
-    .review-next h3{font-size:1.45rem;margin:0 0 10px}
-    .review-next p{color:#d8e5f2;margin:0}
-    .review-next small{display:block;color:#a9bfd4;margin-top:20px;line-height:1.55}
-    @media (max-width:760px){.reviews-layout{grid-template-columns:1fr}.review-card,.review-next{padding:25px}}
+    .review-note{display:block;width:100%;font-size:.82rem;line-height:1.45}
+    @media (max-width:760px){.reviews-layout{grid-template-columns:1fr}.review-card{padding:25px}}
   </style>
 </head>
 <body>
@@ -404,12 +401,12 @@
             <span class="section-kicker">Customer feedback</span>
             <h2>What customers say about Rayzart.</h2>
           </div>
-          <p>We are building this section with honest, published customer feedback. No made-up ratings and no paid reviews.</p>
+          <p>Real customer feedback from published reviews. No made-up ratings and no paid reviews.</p>
         </div>
 
         <div class="reviews-layout">
           <article class="review-card">
-            <div class="review-stars" aria-label="Positive customer review">★★★★★</div>
+            <div class="review-stars" aria-label="5 out of 5 stars">★★★★★</div>
             <blockquote>“Awesome work. Super conscientious about details... Very trustworthy.”</blockquote>
             <div class="review-source">
               <strong>John V.</strong>
@@ -418,11 +415,52 @@
             </div>
           </article>
 
-          <aside class="review-next">
-            <h3>More verified reviews will be added.</h3>
-            <p>Rayzart will add customer feedback and a Google review link after the official review page is active and verified.</p>
-            <small>Until then, this section uses only feedback that can be traced to an original published source.</small>
-          </aside>
+          <article class="review-card">
+            <div class="review-stars" aria-label="5 out of 5 stars">★★★★★</div>
+            <blockquote>“Very kind person easy to talk to and work with”</blockquote>
+            <div class="review-source">
+              <strong>Michael</strong>
+              <span>Facebook Marketplace customer review • June 30, 2026</span>
+              <span class="review-note">Noted for punctuality, communication, pricing and item description.</span>
+            </div>
+          </article>
+
+          <article class="review-card">
+            <div class="review-stars" aria-label="5 out of 5 stars">★★★★★</div>
+            <blockquote>“Rented a trailer from bill and he made it very easy and his trailers are in great shape as well. Definitely will rent a trailer from him again if needed.”</blockquote>
+            <div class="review-source">
+              <strong>Chris</strong>
+              <span>Facebook Marketplace customer review • May 17, 2026</span>
+            </div>
+          </article>
+
+          <article class="review-card">
+            <div class="review-stars" aria-label="5 out of 5 stars">★★★★★</div>
+            <blockquote>“Legend! He's the guy for the job... trust me”</blockquote>
+            <div class="review-source">
+              <strong>Daniel</strong>
+              <span>Facebook Marketplace customer review • May 12, 2026</span>
+            </div>
+          </article>
+
+          <article class="review-card">
+            <div class="review-stars" aria-label="5 out of 5 stars">★★★★★</div>
+            <blockquote>“Rented me an amazing trailer, did the job perfectly 10/10 would recommend. Answered promptly.”</blockquote>
+            <div class="review-source">
+              <strong>Matthew</strong>
+              <span>Facebook Marketplace customer review • April 19, 2026</span>
+              <span class="review-note">Noted for communication, pricing and item description.</span>
+            </div>
+          </article>
+
+          <article class="review-card">
+            <div class="review-stars" aria-label="5 out of 5 stars">★★★★★</div>
+            <blockquote>“Everything was as stated. Made renting the trailer hassle free.”</blockquote>
+            <div class="review-source">
+              <strong>Dan</strong>
+              <span>Facebook Marketplace customer review • April 17, 2026</span>
+            </div>
+          </article>
         </div>
       </div>
     </section>
