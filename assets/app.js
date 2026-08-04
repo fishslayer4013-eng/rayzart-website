@@ -6,6 +6,16 @@
   const brandSubline = document.querySelector(".brand small");
   if (brandSubline) brandSubline.textContent = "rayzartllc.com";
 
+  const reviewNext = document.querySelector(".review-next");
+  if (reviewNext) {
+    const reviewHeading = reviewNext.querySelector("h3");
+    const reviewBody = reviewNext.querySelector("p");
+    const reviewNote = reviewNext.querySelector("small");
+    if (reviewHeading) reviewHeading.textContent = "More verified reviews will be added.";
+    if (reviewBody) reviewBody.textContent = "Rayzart will add customer feedback and a Google review link after the official review page is active and verified.";
+    if (reviewNote) reviewNote.textContent = "Until then, this section uses only feedback that can be traced to an original published source.";
+  }
+
   menuButton?.addEventListener("click", () => {
     const open = menuButton.getAttribute("aria-expanded") === "true";
     menuButton.setAttribute("aria-expanded", String(!open));
