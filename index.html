@@ -33,6 +33,21 @@
       .action-grid{grid-template-columns:1fr}
       .action-shot img{aspect-ratio:4/3}
     }
+  
+    .reviews-section{background:#f4f7fb}
+    .reviews-layout{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(280px,.75fr);gap:28px;align-items:stretch;margin-top:38px}
+    .review-card,.review-next{border-radius:22px;padding:32px}
+    .review-card{background:#fff;border:1px solid var(--line);box-shadow:0 14px 38px rgba(20,49,77,.09)}
+    .review-stars{color:#f4b223;letter-spacing:.16em;font-size:1.15rem}
+    .review-card blockquote{margin:18px 0 20px;color:var(--navy);font-size:clamp(1.3rem,2vw,1.75rem);line-height:1.45;font-weight:700}
+    .review-source{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;color:var(--muted);font-size:.9rem}
+    .review-source strong{color:var(--navy)}
+    .review-source a{color:var(--blue);font-weight:700}
+    .review-next{background:var(--navy);color:#fff;display:flex;flex-direction:column;justify-content:center}
+    .review-next h3{font-size:1.45rem;margin:0 0 10px}
+    .review-next p{color:#d8e5f2;margin:0}
+    .review-next small{display:block;color:#a9bfd4;margin-top:20px;line-height:1.55}
+    @media (max-width:760px){.reviews-layout{grid-template-columns:1fr}.review-card,.review-next{padding:25px}}
   </style>
 </head>
 <body>
@@ -57,6 +72,7 @@
         <a href="#trailers">Trailers</a>
         <a href="#availability">Availability</a>
         <a href="#services">Services</a>
+        <a href="#reviews">Reviews</a>
         <a href="#requirements">Rental Info</a>
         <a href="#contact" class="nav-cta">Request a Trailer</a>
       </nav>
@@ -326,6 +342,36 @@
           <div><span>✓</span><p><strong>Secure the load</strong><br>Proper straps, chains and binders are required.</p></div>
           <div><span>✓</span><p><strong>Refundable deposit</strong><br>A $200 damage deposit commonly applies and is confirmed before pickup.</p></div>
           <div><span>✓</span><p><strong>Plan ahead</strong><br>At least 24 hours’ notice is appreciated when possible.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section reviews-section" id="reviews">
+      <div class="container">
+        <div class="section-heading split">
+          <div>
+            <span class="section-kicker">Customer feedback</span>
+            <h2>What customers say about Rayzart.</h2>
+          </div>
+          <p>We are building this section with honest, published customer feedback. No made-up ratings and no paid reviews.</p>
+        </div>
+
+        <div class="reviews-layout">
+          <article class="review-card">
+            <div class="review-stars" aria-label="Positive customer review">★★★★★</div>
+            <blockquote>“Awesome work. Super conscientious about details... Very trustworthy.”</blockquote>
+            <div class="review-source">
+              <strong>John V.</strong>
+              <span>HomeGuide customer review • January 2021</span>
+              <a href="https://homeguide.com/id/coeur-d%27alene/house-cleaning/rayzart-diversified-services" target="_blank" rel="noopener">Read the original review</a>
+            </div>
+          </article>
+
+          <aside class="review-next">
+            <h3>More honest reviews are coming.</h3>
+            <p>Rayzart is setting up its Google Business Profile so trailer-rental and hauling customers can share their experience.</p>
+            <small>The Google review button will be added here only after Rayzart’s official review page is active and verified.</small>
+          </aside>
         </div>
       </div>
     </section>
