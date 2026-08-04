@@ -46,6 +46,7 @@
   <link rel="icon" href="assets/images/rayzart-logo.png">
   <link rel="stylesheet" href="assets/styles.css">
   <script src="site.config.js"></script>
+  <script src="availability-data.js"></script>
   <script defer src="assets/app.js"></script>
 
   <style>
@@ -272,9 +273,32 @@
     <section class="section section-dark" id="availability">
       <div class="container availability-grid">
         <div>
-          <span class="section-kicker light">Availability request</span>
-          <h2>Tell us what you need and when.</h2>
-          <p>Choose the trailer and dates. This prepares a clear request for Rayzart. A rental is not confirmed until Rayzart responds and verifies the towing setup.</p>
+          <span class="section-kicker light">Trailer availability</span>
+          <h2>See booked dates before you ask.</h2>
+          <p>Choose a trailer to view its calendar. Customer names and private details are never shown. Rayzart still confirms every rental personally.</p>
+
+          <div class="availability-calendar" id="availability-calendar">
+            <div class="calendar-toolbar">
+              <label for="calendar-trailer">Show</label>
+              <select id="calendar-trailer">
+                <option>23 Deck Trailer</option>
+                <option>26 Deck Trailer</option>
+                <option>26 Dump Trailer</option>
+              </select>
+            </div>
+            <div class="calendar-month-bar">
+              <button id="calendar-prev" type="button" aria-label="Previous month">‹</button>
+              <h3 id="calendar-month" aria-live="polite"></h3>
+              <button id="calendar-next" type="button" aria-label="Next month">›</button>
+            </div>
+            <div class="calendar-grid" id="calendar-grid" role="grid" aria-label="Trailer booking calendar"></div>
+            <div class="calendar-legend" aria-label="Calendar key">
+              <span><i class="legend-open"></i>No booking shown</span>
+              <span><i class="legend-limited"></i>Limited</span>
+              <span><i class="legend-booked"></i>Booked</span>
+            </div>
+            <p class="calendar-note">Click a date to put it in the request form. “Limited” means one deck trailer may already be booked. Last updated <span id="calendar-updated"></span>.</p>
+          </div>
 
           <div class="process">
             <div><span>1</span><p><strong>Select dates</strong><br>Choose a trailer and project dates.</p></div>
@@ -310,6 +334,8 @@
               <input id="end-date" name="endDate" type="date" required>
             </label>
           </div>
+
+          <p class="date-check" id="date-check" aria-live="polite">Select a trailer and dates to check the calendar.</p>
 
           <label>
             What are you moving or working on?
