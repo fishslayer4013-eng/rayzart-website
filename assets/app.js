@@ -50,7 +50,6 @@
   const bookings = Array.isArray(availability.bookings) ? availability.bookings : [];
   const calendarGrid = document.getElementById("calendar-grid");
   const calendarMonth = document.getElementById("calendar-month");
-  const calendarTrailer = document.getElementById("calendar-trailer");
   const calendarPrev = document.getElementById("calendar-prev");
   const calendarNext = document.getElementById("calendar-next");
   const calendarUpdated = document.getElementById("calendar-updated");
@@ -88,6 +87,17 @@
     return "open";
   }
 
+  function bookingsForDate(isoDate) {
+    return bookings.filter(booking => isoDate >= booking.start && isoDate <= booking.end);
+  }
+
+  function calendarBookingDetails(booking) {
+    if (booking.trailer === "23 Deck Trailer") return { label: "23 Deck", className: "trailer-23" };
+    if (booking.trailer === "26 Deck Trailer") return { label: "26 Deck", className: "trailer-26" };
+    if (booking.trailer === "26 Dump Trailer") return { label: "26 Dump", className: "trailer-dump" };
+    return { label: "Deck limited", className: "trailer-deck-limited" };
+  }
+
   function statusForRange(trailer, start, end) {
     if (!isDeckTrailer(trailer) && trailer !== "26 Dump Trailer") return "unknown";
     if (!start || !end || end < start) return "unknown";
@@ -122,8 +132,7 @@
   }
 
   function renderCalendar() {
-    if (!calendarGrid || !calendarMonth || !calendarTrailer) return;
-    const trailer = calendarTrailer.value;
+    if (!calendarGrid || !calendarMonth) return;
     const monthName = viewMonth.toLocaleDateString("en-US", { month: "long", year: "numeric" });
     calendarMonth.textContent = monthName;
     calendarGrid.replaceChildren();
@@ -148,18 +157,37 @@
     for (let day = 1; day <= daysInMonth; day += 1) {
       const date = new Date(viewMonth.getFullYear(), viewMonth.getMonth(), day, 12);
       const isoDate = dateToIso(date);
-      const dateStatus = statusForDate(trailer, isoDate);
+      const dateBookings = bookingsForDate(isoDate);
       const isPast = isoDate < localToday;
-      const label = dateStatus === "booked" ? "Booked" : dateStatus === "limited" ? "Limited" : "No booking";
       const button = document.createElement("button");
       button.type = "button";
-      button.className = `calendar-day ${dateStatus}${isoDate === localToday ? " today" : ""}${isPast ? " past" : ""}`;
+      button.className = `calendar-day${dateBookings.length ? " has-bookings" : ""}${isoDate === localToday ? " today" : ""}${isPast ? " past" : ""}`;
       button.disabled = isPast;
-      button.innerHTML = `<span>${day}</span><span class="calendar-status">${label}</span>`;
+
+      const dateNumber = document.createElement("span");
+      dateNumber.className = "calendar-date-number";
+      dateNumber.textContent = String(day);
+      button.appendChild(dateNumber);
+
+      if (dateBookings.length) {
+        const eventList = document.createElement("span");
+        eventList.className = "calendar-events";
+        dateBookings.forEach(booking => {
+          const details = calendarBookingDetails(booking);
+          const eventLabel = document.createElement("span");
+          eventLabel.className = `calendar-booking ${details.className}`;
+          eventLabel.textContent = details.label;
+          eventList.appendChild(eventLabel);
+        });
+        button.appendChild(eventList);
+      }
+
+      const spokenStatus = dateBookings.length
+        ? dateBookings.map(booking => `${calendarBookingDetails(booking).label} booked`).join(", ")
+        : "No booking shown";
       button.setAttribute("role", "gridcell");
-      button.setAttribute("aria-label", `${date.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}: ${label}`);
+      button.setAttribute("aria-label", `${date.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}: ${spokenStatus}`);
       button.addEventListener("click", () => {
-        if (trailerSelect) trailerSelect.value = trailer;
         if (startDate) startDate.value = isoDate;
         if (endDate) {
           endDate.min = isoDate;
@@ -193,12 +221,7 @@
     renderCalendar();
   });
 
-  calendarTrailer?.addEventListener("change", renderCalendar);
   trailerSelect?.addEventListener("change", () => {
-    if (calendarTrailer && (isDeckTrailer(trailerSelect.value) || trailerSelect.value === "26 Dump Trailer")) {
-      calendarTrailer.value = trailerSelect.value;
-      renderCalendar();
-    }
     updateDateCheck();
   });
 
