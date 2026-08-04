@@ -3,6 +3,8 @@
   const cfg = window.RAYZART_CONFIG || {};
   const menuButton = document.querySelector(".menu-toggle");
   const nav = document.querySelector(".main-nav");
+  const brandSubline = document.querySelector(".brand small");
+  if (brandSubline) brandSubline.textContent = "rayzartllc.com";
 
   menuButton?.addEventListener("click", () => {
     const open = menuButton.getAttribute("aria-expanded") === "true";
