@@ -28,3 +28,11 @@ window.RAYZART_CONFIG = {
     // Leave the existing business information in place if it cannot be read.
   }
 })();
+
+// Load the customer review carousel without changing the large page file.
+(() => {
+  const reviewScript = document.createElement("script");
+  reviewScript.src = "assets/reviews-carousel.js?v=20260806-1";
+  reviewScript.async = false;
+  document.head.appendChild(reviewScript);
+})();
