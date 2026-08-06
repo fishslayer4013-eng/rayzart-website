@@ -1,0 +1,82 @@
+name: One-time custom-domain metadata update
+
+on:
+  push:
+    branches:
+      - seo-custom-domain-metadata-20260806
+
+permissions:
+  contents: write
+
+jobs:
+  update-metadata:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the temporary branch
+        uses: actions/checkout@v4
+        with:
+          ref: seo-custom-domain-metadata-20260806
+
+      - name: Replace only the five metadata URLs
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import hashlib
+
+          path = Path("index.html")
+          original = path.read_text(encoding="utf-8")
+          head_end = original.find("</head>")
+          if head_end == -1:
+              raise SystemExit("index.html has no closing </head> tag")
+
+          head = original[:head_end]
+          body = original[head_end:]
+          body_hash_before = hashlib.sha256(body.encode("utf-8")).hexdigest()
+
+          old = "https://fishslayer4013-eng.github.io/rayzart-website/"
+          new = "https://rayzartllc.com/"
+          replacement_count = head.count(old)
+          if replacement_count != 5:
+              raise SystemExit(
+                  f"Safety stop: expected exactly 5 old metadata URLs before </head>; found {replacement_count}"
+              )
+
+          updated_head = head.replace(old, new)
+          updated = updated_head + body
+          body_after = updated[updated.find("</head>"):]
+          body_hash_after = hashlib.sha256(body_after.encode("utf-8")).hexdigest()
+
+          if body_hash_before != body_hash_after:
+              raise SystemExit("Safety stop: page body changed")
+          if old in updated_head:
+              raise SystemExit("Safety stop: an old metadata URL remains before </head>")
+          if updated_head.count(new) < 5:
+              raise SystemExit("Safety stop: new custom-domain URLs were not written as expected")
+
+          path.write_text(updated, encoding="utf-8")
+          print(f"Replaced {replacement_count} metadata URLs.")
+          print(f"Verified unchanged page body SHA-256: {body_hash_after}")
+          PY
+
+      - name: Show and validate the exact diff
+        shell: bash
+        run: |
+          git diff --check
+          git diff --unified=1 -- index.html
+          changed_lines=$(git diff --numstat -- index.html | awk '{print $1+$2}')
+          if [ "$changed_lines" != "10" ]; then
+            echo "Safety stop: expected 5 removed and 5 added lines; found $changed_lines changed lines"
+            exit 1
+          fi
+
+      - name: Commit the metadata-only update and remove this workflow
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm .github/workflows/seo-custom-domain-metadata.yml
+          git add index.html
+          git commit -m "Update custom-domain metadata without changing page content [seo-bot]"
+          git push origin seo-custom-domain-metadata-20260806
