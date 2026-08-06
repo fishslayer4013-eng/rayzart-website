@@ -7,3 +7,24 @@ window.RAYZART_CONFIG = {
   pickupLocation: "Hauser, Idaho",
   serviceArea: "North Idaho & the Spokane Area"
 };
+
+// Keep Google's page information tied to the public Rayzart domain.
+(() => {
+  const publicUrl = "https://rayzartllc.com/";
+
+  document.querySelector('link[rel="canonical"]')?.setAttribute("href", publicUrl);
+  document.querySelector('meta[property="og:url"]')?.setAttribute("content", publicUrl);
+  document.querySelector('meta[property="og:image"]')?.setAttribute("content", `${publicUrl}assets/images/rayzart-social.webp`);
+
+  const businessData = document.querySelector('script[type="application/ld+json"]');
+  if (!businessData) return;
+
+  try {
+    const details = JSON.parse(businessData.textContent || "{}");
+    details["@id"] = `${publicUrl}#business`;
+    details.url = publicUrl;
+    businessData.textContent = JSON.stringify(details);
+  } catch {
+    // Leave the existing business information in place if it cannot be read.
+  }
+})();
