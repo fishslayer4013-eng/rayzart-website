@@ -1,7 +1,7 @@
 name: Export Drive Backup
 
 on:
-  push:
+  pull_request:
     branches:
       - main
 
@@ -25,4 +25,3 @@ jobs:
           name: rayzart-website-built-2026-08-06
           path: Rayzart-Website-Built-2026-08-06.zip
           retention-days: 1
-# Temporary one-time backup export
