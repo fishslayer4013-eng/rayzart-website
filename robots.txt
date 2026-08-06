@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://fishslayer4013-eng.github.io/rayzart-website/sitemap.xml
+Sitemap: https://rayzartllc.com/sitemap.xml
