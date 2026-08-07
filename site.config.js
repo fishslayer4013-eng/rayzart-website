@@ -36,3 +36,11 @@ window.RAYZART_CONFIG = {
   reviewScript.async = false;
   document.head.appendChild(reviewScript);
 })();
+
+// Keep public trailer names tied to the matching website calendar colors.
+(() => {
+  const trailerLabelScript = document.createElement("script");
+  trailerLabelScript.src = "assets/trailer-public-labels.js?v=20260806-1";
+  trailerLabelScript.async = false;
+  document.head.appendChild(trailerLabelScript);
+})();
