@@ -1,0 +1,51 @@
+name: One-time public domain correction
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/one-time-fix-public-domain.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  fix-domain:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Replace legacy GitHub Pages URLs in homepage metadata
+        shell: python
+        run: |
+          from pathlib import Path
+
+          path = Path('index.html')
+          text = path.read_text(encoding='utf-8')
+          old = 'https://fishslayer4013-eng.github.io/rayzart-website/'
+          new = 'https://rayzartllc.com/'
+          count = text.count(old)
+          if count == 0:
+              raise SystemExit('No legacy URLs found; refusing to change anything.')
+          updated = text.replace(old, new)
+          path.write_text(updated, encoding='utf-8')
+          print(f'Replaced {count} legacy URL occurrence(s).')
+
+      - name: Verify only intended domain references changed
+        run: |
+          if grep -q 'https://fishslayer4013-eng.github.io/rayzart-website/' index.html; then
+            echo 'Legacy URL still present; refusing to commit.'
+            exit 1
+          fi
+          grep -nE 'canonical|og:url|og:image|"@id"|"url"' index.html | head -20
+
+      - name: Commit corrected homepage
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html
+          git diff --cached --quiet && exit 0
+          git commit -m 'Fix public Rayzart domain metadata'
+          git push
