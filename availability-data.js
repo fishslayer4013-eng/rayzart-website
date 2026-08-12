@@ -9,7 +9,7 @@ window.RAYZART_AVAILABILITY = {
     },
     {
       trailer: "23 Deck Trailer",
-      start: "2026-08-14",
+      start: "2026-08-13",
       end: "2026-08-15",
       status: "booked"
     },
