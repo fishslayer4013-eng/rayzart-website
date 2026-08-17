@@ -7,6 +7,12 @@
       text: "Absolutely wonderful experience! From start to finish, Ray is incredibly polite, kind, and accommodating. He made the entire rental process so easy and stress-free, were quick to answer questions, and went out of his way to make sure everything worked for us. It’s refreshing to do business with people who genuinely care about their customers and provide such great service. Friendly, professional, reliable, and so easy to work with. I would absolutely rent from him again and highly recommend them to anyone looking for a trailer rental!"
     },
     {
+      name: "Kyle Cannon",
+      date: "August 2026",
+      source: "Google customer review",
+      text: "Excellent!! Great business and equipment! Easy to communicate with and to schedule."
+    },
+    {
       name: "Kyle",
       date: "October 13, 2024",
       source: "Facebook Marketplace customer review",
