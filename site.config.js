@@ -32,7 +32,7 @@ window.RAYZART_CONFIG = {
 // Load the customer review carousel without changing the large page file.
 (() => {
   const reviewScript = document.createElement("script");
-  reviewScript.src = "assets/reviews-carousel.js?v=20260812-1";
+  reviewScript.src = "assets/reviews-carousel.js?v=20260824-1";
   reviewScript.async = false;
   document.head.appendChild(reviewScript);
 })();
