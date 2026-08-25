@@ -1,6 +1,12 @@
 (() => {
   const reviews = [
     {
+      name: "Lloan Farias",
+      date: "August 20, 2026",
+      source: "Google customer review",
+      text: "was absolutely awesome to work with! The dump trailer was in great shape, the rental was super affordable, and Ray was very flexible and worked with my schedule. He made the whole process easy and stress free. I would definitely rent from him again and highly recommend him to anyone looking for a dump trailer rental or any car hauler he also has 26 feet heavy duty ones."
+    },
+    {
       name: "Kandis Duff",
       date: "August 12, 2026",
       source: "Google customer review",
