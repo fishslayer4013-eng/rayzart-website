@@ -44,3 +44,11 @@ window.RAYZART_CONFIG = {
   trailerLabelScript.async = false;
   document.head.appendChild(trailerLabelScript);
 })();
+
+// Keep unavailable trailers visible while preventing customer requests.
+(() => {
+  const trailerStatusScript = document.createElement("script");
+  trailerStatusScript.src = "assets/trailer-status.js?v=20260824-1";
+  trailerStatusScript.async = false;
+  document.head.appendChild(trailerStatusScript);
+})();
