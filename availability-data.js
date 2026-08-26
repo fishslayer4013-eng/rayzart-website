@@ -1,11 +1,6 @@
-window.RAYZART_AVAILABILITY = {
-  updated: "2026-08-26",
-  bookings: [
-    {
-      trailer: "26 Dump Trailer",
-      start: "2026-08-22",
-      end: "2026-09-20",
-      status: "booked"
-    }
-  ]
-};
+(function () {
+  var script = document.createElement('script');
+  script.src = 'availability-live.js?v=' + Date.now();
+  script.async = false;
+  document.head.appendChild(script);
+})();
