@@ -1,23 +1,22 @@
+window.RAYZART_AVAILABILITY = {
+  updated: "2026-08-27",
+  bookings: [
+    { trailer: "26 Dump Trailer", start: "2026-08-22", end: "2026-09-21", status: "booked" }
+  ]
+};
+
 (function () {
-  var style = document.createElement('style');
+  if (document.getElementById("rayzart-calendar-sizing")) return;
+  var style = document.createElement("style");
+  style.id = "rayzart-calendar-sizing";
   style.textContent = [
-    '.calendar-day{min-height:100px}',
-    '.calendar-empty{min-height:100px}',
-    '.calendar-booking{font-size:0}',
-    '.calendar-booking.trailer-23::after{content:"T1 BOOKED";font-size:.52rem}',
-    '.calendar-booking.trailer-26::after{content:"T2 BOOKED";font-size:.52rem}',
-    '.calendar-booking.trailer-dump::after{content:"DUMP BOOKED";font-size:.52rem}',
-    '@media (max-width:680px){.calendar-day{min-height:92px!important}.calendar-empty{min-height:92px!important}.calendar-booking.trailer-23::after,.calendar-booking.trailer-26::after,.calendar-booking.trailer-dump::after{font-size:.46rem}}'
-  ].join('');
+    ".calendar-day{min-height:112px}",
+    ".calendar-empty{min-height:112px}",
+    ".calendar-booking{font-size:0;padding:3px 1px}",
+    ".calendar-booking.trailer-23::after{content:\"T1 BOOKED\";font-size:.50rem}",
+    ".calendar-booking.trailer-26::after{content:\"T2 BOOKED\";font-size:.50rem}",
+    ".calendar-booking.trailer-dump::after{content:\"DUMP BOOKED\";font-size:.50rem}",
+    "@media(max-width:680px){.calendar-day{min-height:104px!important}.calendar-empty{min-height:104px!important}.calendar-booking.trailer-23::after,.calendar-booking.trailer-26::after,.calendar-booking.trailer-dump::after{font-size:.44rem}}"
+  ].join("");
   document.head.appendChild(style);
-
-  if (document.readyState === 'loading') {
-    document.write('<script src="availability-live.js?v=' + Date.now() + '"><\/script>');
-    return;
-  }
-
-  var script = document.createElement('script');
-  script.src = 'availability-live.js?v=' + Date.now();
-  script.onload = function () { window.dispatchEvent(new Event('rayzart-availability-loaded')); };
-  document.head.appendChild(script);
 })();
