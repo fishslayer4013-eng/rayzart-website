@@ -1,5 +1,5 @@
 window.RAYZART_AVAILABILITY = {
-  updated: "2026-08-29",
+  updated: "2026-08-30",
   bookings: [
     { trailer: "26 Dump Trailer", start: "2026-08-22", end: "2026-09-21", status: "booked" }
   ]
