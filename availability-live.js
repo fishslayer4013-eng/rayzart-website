@@ -1,10 +1,9 @@
-window.RAYZART_AVAILABILITY = {
-  updated: "2026-08-26",
-  bookings: []
-};
-
 (function () {
-  var availability = window.RAYZART_AVAILABILITY;
+  var availability = window.RAYZART_AVAILABILITY || { updated: "", bookings: [] };
+  if (!Array.isArray(availability.bookings)) availability.bookings = [];
+  window.RAYZART_AVAILABILITY = availability;
+
+  var FEED_URL = "https://script.google.com/macros/s/AKfycbzz0xo1Cla7CKNwF5t1fnnwboCTvgfc2QleLdAlTMwYzwM3XwwbKB6bOButBQw9qIbC_Q/exec";
   var monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 
   function pad(value) {
@@ -18,17 +17,23 @@ window.RAYZART_AVAILABILITY = {
     return { label: "BOOKED", className: "trailer-deck-limited" };
   }
 
-  function installStyle() {
-    if (document.getElementById("rayzart-live-calendar-style")) return;
-    var style = document.createElement("style");
-    style.id = "rayzart-live-calendar-style";
-    style.textContent = ".calendar-day{min-height:100px}.calendar-empty{min-height:100px}.calendar-events{display:flex;flex-direction:column;gap:3px;margin-top:8px}.calendar-booking{display:block;border-radius:5px;padding:3px 2px;color:#fff;font-size:.48rem;line-height:1.05;font-weight:900;text-align:center}.calendar-booking.trailer-23{background:#1768c5}.calendar-booking.trailer-26{background:#b85c00}.calendar-booking.trailer-dump{background:#187653}.calendar-booking.trailer-deck-limited{background:#6a4ca3}@media(max-width:680px){.calendar-day{min-height:92px!important}.calendar-empty{min-height:92px!important}.calendar-booking{font-size:.43rem!important}}";
-    document.head.appendChild(style);
+  function clearSyncWarning() {
+    var warning = document.getElementById("availability-sync-warning");
+    if (warning) warning.remove();
+  }
+
+  function showSyncWarning() {
+    var grid = document.getElementById("calendar-grid");
+    if (!grid || document.getElementById("availability-sync-warning")) return;
+    var warning = document.createElement("div");
+    warning.id = "availability-sync-warning";
+    warning.setAttribute("role", "status");
+    warning.style.cssText = "margin:10px 0;padding:10px 12px;border-radius:8px;background:#fff4e5;border:1px solid #d97706;color:#7c2d12;font-weight:700";
+    warning.textContent = "Live availability sync is temporarily unavailable. Please call or text Rayzart to confirm dates.";
+    grid.parentNode.insertBefore(warning, grid);
   }
 
   function applyLiveAvailability() {
-    installStyle();
-
     var monthLabel = document.getElementById("calendar-month");
     var grid = document.getElementById("calendar-grid");
     if (!monthLabel || !grid) return;
@@ -73,8 +78,10 @@ window.RAYZART_AVAILABILITY = {
 
     var updated = document.getElementById("calendar-updated");
     if (updated && availability.updated) {
-      var d = new Date(availability.updated + "T12:00:00");
-      updated.textContent = d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+      var parsed = new Date(availability.updated);
+      if (!Number.isNaN(parsed.getTime())) {
+        updated.textContent = parsed.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+      }
     }
   }
 
@@ -83,6 +90,29 @@ window.RAYZART_AVAILABILITY = {
     setTimeout(applyLiveAvailability, 50);
     setTimeout(applyLiveAvailability, 250);
     setTimeout(applyLiveAvailability, 1000);
+  }
+
+  async function refreshFromRbms() {
+    try {
+      var response = await fetch(FEED_URL + "?t=" + Date.now(), { cache: "no-store" });
+      if (!response.ok) throw new Error("HTTP " + response.status);
+      var payload = await response.json();
+      if (!payload || payload.ok !== true || !Array.isArray(payload.bookings)) {
+        throw new Error("Unexpected feed response");
+      }
+
+      availability.bookings.splice(0, availability.bookings.length);
+      payload.bookings.forEach(function (booking) {
+        availability.bookings.push(booking);
+      });
+      availability.updated = payload.updated || "";
+      clearSyncWarning();
+      scheduleApply();
+    } catch (error) {
+      console.error("Rayzart availability sync failed", error);
+      showSyncWarning();
+      scheduleApply();
+    }
   }
 
   if (document.readyState === "loading") {
@@ -106,4 +136,5 @@ window.RAYZART_AVAILABILITY = {
     observer.observe(grid, { childList: true });
   }
   startObserver();
+  refreshFromRbms();
 })();
