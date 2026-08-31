@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Rayzart Availability Sync Test</title>
+  <style>
+    body{font-family:Arial,sans-serif;max-width:800px;margin:40px auto;padding:0 18px;line-height:1.45;background:#f6f7f9;color:#1f2937}
+    .card{background:white;border:1px solid #d1d5db;border-radius:10px;padding:18px;margin:14px 0}
+    .ok{border-left:6px solid #15803d}.bad{border-left:6px solid #b91c1c}.wait{border-left:6px solid #b45309}
+    table{border-collapse:collapse;width:100%}th,td{border:1px solid #ddd;padding:8px;text-align:left}th{background:#eee}
+    button{padding:10px 14px;font-weight:700;cursor:pointer}
+    code{word-break:break-all}
+  </style>
+</head>
+<body>
+  <h1>RBMS → Website Sync Test</h1>
+  <p>This page is unlinked and for testing only. It does not change the live availability calendar.</p>
+  <div id="status" class="card wait"><strong>Checking RBMS test feed…</strong></div>
+  <div class="card"><button id="reload">Check again</button></div>
+  <div id="data"></div>
+
+<script>
+const FEED='https://script.google.com/macros/s/AKfycbzz0xo1Cla7CKNwF5t1fnnwboCTvgfc2QleLdAlTMwYzwM3XwwbKB6bOButBQw9qIbC_Q/exec';
+
+async function checkFeed(){
+  const status=document.getElementById('status');
+  const data=document.getElementById('data');
+  status.className='card wait';
+  status.innerHTML='<strong>Checking RBMS test feed…</strong>';
+  data.innerHTML='';
+  try{
+    const response=await fetch(FEED+'?t='+Date.now(),{cache:'no-store'});
+    if(!response.ok) throw new Error('HTTP '+response.status);
+    const payload=await response.json();
+    if(!payload || payload.ok!==true || !Array.isArray(payload.bookings)) throw new Error('Unexpected feed response');
+    status.className='card ok';
+    status.innerHTML='<strong>PASS:</strong> The test website can read the RBMS feed directly.';
+    const rows=payload.bookings.map(b=>`<tr><td>${escapeHtml(b.trailer)}</td><td>${escapeHtml(b.start)}</td><td>${escapeHtml(b.end)}</td><td>${escapeHtml(b.status)}</td></tr>`).join('');
+    data.innerHTML=`<div class="card"><strong>Feed updated:</strong> ${escapeHtml(payload.updated||'not supplied')}<br><br><table><thead><tr><th>Trailer</th><th>Start</th><th>End</th><th>Status</th></tr></thead><tbody>${rows||'<tr><td colspan="4">No blocks returned</td></tr>'}</tbody></table></div>`;
+  }catch(err){
+    status.className='card bad';
+    status.innerHTML='<strong>FAIL:</strong> The browser could not read the Apps Script feed. Nothing on the live calendar has been changed.';
+    data.innerHTML='<div class="card"><strong>Error:</strong> <code>'+escapeHtml(String(err))+'</code></div>';
+  }
+}
+function escapeHtml(v){return String(v??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));}
+document.getElementById('reload').addEventListener('click',checkFeed);
+checkFeed();
+</script>
+</body>
+</html>
