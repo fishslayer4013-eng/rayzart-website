@@ -178,7 +178,7 @@
   style.textContent = `
     .action-grid.action-carousel-ready {
       display: block;
-      max-width: 940px;
+      max-width: 820px;
       margin: 40px auto 0;
     }
     .action-carousel {
@@ -209,9 +209,11 @@
     }
     .action-carousel-slide img {
       width: 100%;
-      aspect-ratio: 16 / 10;
-      object-fit: cover;
+      height: clamp(340px, 52vw, 520px);
+      object-fit: contain;
+      object-position: center;
       display: block;
+      background: #eef2f5;
     }
     .action-carousel-slide figcaption {
       min-height: 88px;
@@ -258,13 +260,16 @@
     }
     @media (max-width: 680px) {
       .action-grid.action-carousel-ready {
+        max-width: 100%;
         margin-top: 28px;
       }
       .action-carousel-viewport {
         border-radius: 16px;
       }
       .action-carousel-slide img {
-        aspect-ratio: 4 / 3;
+        height: min(68vh, 420px);
+        min-height: 280px;
+        object-fit: contain;
       }
       .action-carousel-slide figcaption {
         min-height: 102px;
