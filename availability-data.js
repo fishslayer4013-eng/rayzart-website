@@ -21,3 +21,22 @@ window.RAYZART_AVAILABILITY = {
   ].join("");
   document.head.appendChild(style);
 })();
+
+(function () {
+  function swapRayzartActionPhoto() {
+    var photo = document.querySelector("#in-action .action-shot:nth-child(2) img");
+    if (!photo) return;
+    photo.src = "assets/images/shed-hauling.webp?v=20260831";
+    photo.alt = "Large storage shed secured on a Rayzart 26-foot tilt-deck trailer";
+    photo.style.objectPosition = "center 72%";
+    var caption = photo.closest("figure").querySelector("figcaption");
+    if (caption) {
+      caption.innerHTML = "<strong>Large Loads</strong><span>Sheds, lumber and other bulky loads on the 26-foot tilt deck.</span>";
+    }
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", swapRayzartActionPhoto);
+  } else {
+    swapRayzartActionPhoto();
+  }
+})();
