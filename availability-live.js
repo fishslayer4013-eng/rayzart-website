@@ -89,7 +89,17 @@
     applyLiveAvailability();
     setTimeout(applyLiveAvailability, 50);
     setTimeout(applyLiveAvailability, 250);
-    setTimeout(applyLiveAvailability, 1000);
+  }
+
+  function wireCalendarNavigation() {
+    ["calendar-prev", "calendar-next"].forEach(function (id) {
+      var button = document.getElementById(id);
+      if (!button || button.dataset.rbmsSyncWired === "1") return;
+      button.dataset.rbmsSyncWired = "1";
+      button.addEventListener("click", function () {
+        setTimeout(scheduleApply, 0);
+      });
+    });
   }
 
   async function refreshFromRbms() {
@@ -107,34 +117,25 @@
       });
       availability.updated = payload.updated || "";
       clearSyncWarning();
+      wireCalendarNavigation();
       scheduleApply();
     } catch (error) {
       console.error("Rayzart availability sync failed", error);
       showSyncWarning();
+      wireCalendarNavigation();
       scheduleApply();
     }
   }
 
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", scheduleApply, { once: true });
-  } else {
+  function start() {
+    wireCalendarNavigation();
     scheduleApply();
+    refreshFromRbms();
   }
 
-  var observerStarted = false;
-  function startObserver() {
-    if (observerStarted) return;
-    var grid = document.getElementById("calendar-grid");
-    if (!grid) {
-      setTimeout(startObserver, 100);
-      return;
-    }
-    observerStarted = true;
-    var observer = new MutationObserver(function () {
-      setTimeout(applyLiveAvailability, 0);
-    });
-    observer.observe(grid, { childList: true });
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", start, { once: true });
+  } else {
+    start();
   }
-  startObserver();
-  refreshFromRbms();
 })();
