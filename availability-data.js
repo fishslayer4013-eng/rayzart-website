@@ -26,7 +26,7 @@ window.RAYZART_AVAILABILITY = {
   if (document.getElementById("rayzart-rbms-sync")) return;
   var script = document.createElement("script");
   script.id = "rayzart-rbms-sync";
-  script.src = "availability-live.js?v=20260831-rbms1";
+  script.src = "availability-live.js?v=20260831-rbms2";
   script.async = true;
   document.head.appendChild(script);
 })();
