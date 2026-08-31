@@ -41,7 +41,7 @@ window.RAYZART_CONFIG = {
 // Future action photos can be added to the small carousel list without editing the main page.
 (() => {
   const actionPhotoScript = document.createElement("script");
-  actionPhotoScript.src = "assets/action-photos-carousel.js?v=20260831-1";
+  actionPhotoScript.src = "assets/action-photos-carousel.js?v=20260831-2";
   actionPhotoScript.async = false;
   document.head.appendChild(actionPhotoScript);
 })();
