@@ -37,6 +37,15 @@ window.RAYZART_CONFIG = {
   document.head.appendChild(reviewScript);
 })();
 
+// Load the action-photo carousel as a separate, isolated website feature.
+// Future action photos can be added to the small carousel list without editing the main page.
+(() => {
+  const actionPhotoScript = document.createElement("script");
+  actionPhotoScript.src = "assets/action-photos-carousel.js?v=20260831-1";
+  actionPhotoScript.async = false;
+  document.head.appendChild(actionPhotoScript);
+})();
+
 // Keep public trailer names tied to the matching website calendar colors.
 (() => {
   const trailerLabelScript = document.createElement("script");
