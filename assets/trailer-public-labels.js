@@ -77,19 +77,29 @@
   function applyCalendarLabels() {
     units.forEach(unit => {
       document.querySelectorAll(`.calendar-booking.${unit.bookingClass}`).forEach(label => {
-        label.textContent = unit.publicName;
+        if (label.textContent !== unit.publicName) label.textContent = unit.publicName;
       });
     });
 
     document.querySelectorAll(".calendar-day[aria-label]").forEach(day => {
       const current = day.getAttribute("aria-label") || "";
-      day.setAttribute(
-        "aria-label",
-        current
-          .replaceAll("23 Deck", "Trailer 1")
-          .replaceAll("26 Deck", "Trailer 2")
-          .replaceAll("26 Dump", "Dump Trailer")
-      );
+      const next = current
+        .replaceAll("23 Deck", "Trailer 1")
+        .replaceAll("26 Deck", "Trailer 2")
+        .replaceAll("26 Dump", "Dump Trailer");
+      if (next !== current) day.setAttribute("aria-label", next);
+    });
+  }
+
+  function wireCalendarNavigation() {
+    ["calendar-prev", "calendar-next"].forEach(id => {
+      const button = document.getElementById(id);
+      if (!button || button.dataset.publicLabelWired === "1") return;
+      button.dataset.publicLabelWired = "1";
+      button.addEventListener("click", () => {
+        setTimeout(applyCalendarLabels, 0);
+        setTimeout(applyCalendarLabels, 50);
+      });
     });
   }
 
@@ -188,13 +198,8 @@
     applyFormLabels();
     applyLegendLabels();
     applyCalendarLabels();
+    wireCalendarNavigation();
     replaceFormSubmission();
-
-    const calendarGrid = document.getElementById("calendar-grid");
-    if (calendarGrid) {
-      const observer = new MutationObserver(applyCalendarLabels);
-      observer.observe(calendarGrid, { childList: true, subtree: true });
-    }
   }
 
   if (document.readyState === "loading") {
