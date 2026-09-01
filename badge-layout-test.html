@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Rayzart Badge Layout Test</title>
+<style>
+html,body{margin:0;height:100%;font-family:Arial,sans-serif;background:#111827}
+.testbar{height:44px;display:flex;align-items:center;justify-content:center;background:#111827;color:#fff;font-weight:700;font-size:14px}
+iframe{display:block;width:100%;height:calc(100% - 44px);border:0;background:#fff}
+</style>
+</head>
+<body>
+<div class="testbar">TEST PAGE — LIVE HOMEPAGE IS NOT BEING CHANGED</div>
+<iframe id="preview" src="/?badge-test=1" title="Rayzart badge layout test"></iframe>
+<script>
+const frame=document.getElementById('preview');
+frame.addEventListener('load',()=>{
+  const d=frame.contentDocument;
+  if(!d)return;
+  const s=d.createElement('style');
+  s.textContent=`
+    #deck-trailers .badge{top:auto!important;bottom:16px!important;left:16px!important;right:auto!important;background:#1768c5!important;color:#fff!important}
+    .trailer-grid>.trailer-card:nth-child(2) .badge{top:auto!important;bottom:16px!important;left:16px!important;right:auto!important;background:#b85c00!important;color:#fff!important}
+    #dump-trailer .badge{top:auto!important;bottom:16px!important;left:auto!important;right:16px!important;background:#187653!important;color:#fff!important}
+  `;
+  d.head.appendChild(s);
+  const cards=d.querySelectorAll('.trailer-grid>.trailer-card');
+  if(cards[0]){const b=cards[0].querySelector('.badge');if(b)b.textContent='MATCHING 26-FOOT TILT DECK'}
+  if(cards[1]){const b=cards[1].querySelector('.badge');if(b)b.textContent='MATCHING 26-FOOT TILT DECK'}
+  if(cards[2]){const b=cards[2].querySelector('.badge');if(b)b.textContent='PROJECT READY'}
+  const trailers=d.getElementById('trailers');
+  if(trailers)setTimeout(()=>trailers.scrollIntoView({block:'start'}),150);
+});
+</script>
+</body>
+</html>
