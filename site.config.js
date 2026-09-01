@@ -52,3 +52,11 @@ window.RAYZART_CONFIG = {
   trailerStatusScript.async = false;
   document.head.appendChild(trailerStatusScript);
 })();
+
+// Apply the approved trailer badge positions/colors as an isolated cosmetic layer.
+(() => {
+  const badgeStyles = document.createElement("link");
+  badgeStyles.rel = "stylesheet";
+  badgeStyles.href = "assets/trailer-badge-layout.css?v=20260901-1";
+  document.head.appendChild(badgeStyles);
+})();
