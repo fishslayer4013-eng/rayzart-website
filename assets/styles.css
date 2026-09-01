@@ -1,4 +1,3 @@
-
 :root{
   --navy:#061c38;
   --navy-2:#082a55;
@@ -93,6 +92,7 @@ button{cursor:pointer}
 .badge{position:absolute;top:16px;left:16px;background:#fff;color:var(--navy);font-size:.72rem;font-weight:900;text-transform:uppercase;letter-spacing:.09em;padding:8px 10px;border-radius:999px;box-shadow:0 8px 20px rgba(0,0,0,.16)}
 .badge-dark{background:var(--navy);color:#fff}
 .badge-green{background:var(--green);color:#fff}
+#dump-trailer .badge-green{top:auto;bottom:16px}
 .card-body{padding:26px;display:flex;flex-direction:column;height:100%}
 .card-topline{display:flex;justify-content:space-between;gap:18px;align-items:start}
 .card-kicker{font-size:.72rem;color:var(--blue);font-weight:850;text-transform:uppercase;letter-spacing:.11em}
