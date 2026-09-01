@@ -1,0 +1,27 @@
+/* Approved trailer badge layout — isolated cosmetic override only. */
+#deck-trailers .badge{
+  top:auto!important;
+  bottom:16px!important;
+  left:16px!important;
+  right:auto!important;
+  background:#1768c5!important;
+  color:#fff!important;
+}
+
+.trailer-grid>.trailer-card:nth-child(2) .badge{
+  top:auto!important;
+  bottom:16px!important;
+  left:16px!important;
+  right:auto!important;
+  background:#b85c00!important;
+  color:#fff!important;
+}
+
+#dump-trailer .badge{
+  top:auto!important;
+  bottom:16px!important;
+  left:auto!important;
+  right:16px!important;
+  background:#187653!important;
+  color:#fff!important;
+}
