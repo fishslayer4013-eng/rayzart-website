@@ -1,4 +1,4 @@
-name: One-time public domain correction
+name: One-time availability cache bust
 
 on:
   push:
@@ -11,41 +11,38 @@ permissions:
   contents: write
 
 jobs:
-  fix-domain:
+  bust-availability-cache:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      - name: Replace legacy GitHub Pages URLs in homepage metadata
+      - name: Version the availability data script
         shell: python
         run: |
           from pathlib import Path
 
           path = Path('index.html')
           text = path.read_text(encoding='utf-8')
-          old = 'https://fishslayer4013-eng.github.io/rayzart-website/'
-          new = 'https://rayzartllc.com/'
-          count = text.count(old)
-          if count == 0:
-              raise SystemExit('No legacy URLs found; refusing to change anything.')
-          updated = text.replace(old, new)
-          path.write_text(updated, encoding='utf-8')
-          print(f'Replaced {count} legacy URL occurrence(s).')
+          old = '<script src="availability-data.js"></script>'
+          new = '<script src="availability-data.js?v=20260901-1"></script>'
+          if new in text:
+              print('Availability script already versioned; nothing to change.')
+              raise SystemExit(0)
+          if old not in text:
+              raise SystemExit('Expected availability script tag not found; refusing to change anything.')
+          path.write_text(text.replace(old, new, 1), encoding='utf-8')
+          print('Added cache-busting version to availability-data.js.')
 
-      - name: Verify only intended domain references changed
+      - name: Verify intended script reference
         run: |
-          if grep -q 'https://fishslayer4013-eng.github.io/rayzart-website/' index.html; then
-            echo 'Legacy URL still present; refusing to commit.'
-            exit 1
-          fi
-          grep -nE 'canonical|og:url|og:image|"@id"|"url"' index.html | head -20
+          grep -n 'availability-data.js?v=20260901-1' index.html
 
-      - name: Commit corrected homepage
+      - name: Commit cache-busting homepage change
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add index.html
           git diff --cached --quiet && exit 0
-          git commit -m 'Fix public Rayzart domain metadata'
+          git commit -m 'Bust availability data cache'
           git push
