@@ -76,24 +76,91 @@ window.RAYZART_CONFIG = {
   }, { once: true });
 })();
 
-// Keep Google's page information tied to the public Rayzart domain.
+// Keep Google's page information tied to one consistent Rayzart business identity.
 (() => {
+  const cfg = window.RAYZART_CONFIG || {};
   const publicUrl = "https://rayzartllc.com/";
+  const seoTitle = "Rayzart LLC Trailer Rentals | Post Falls, Coeur d'Alene & North Idaho";
+  const seoDescription = "Local trailer rentals in Hauser near Post Falls and Coeur d'Alene, Idaho. 26-foot tilt-deck trailers, dump trailer rentals, delivery and hauling across North Idaho and the Spokane area.";
 
+  document.title = seoTitle;
+  document.querySelector('meta[name="description"]')?.setAttribute("content", seoDescription);
   document.querySelector('link[rel="canonical"]')?.setAttribute("href", publicUrl);
   document.querySelector('meta[property="og:url"]')?.setAttribute("content", publicUrl);
+  document.querySelector('meta[property="og:title"]')?.setAttribute("content", "Rayzart LLC Trailer Rentals");
+  document.querySelector('meta[property="og:description"]')?.setAttribute("content", seoDescription);
   document.querySelector('meta[property="og:image"]')?.setAttribute("content", `${publicUrl}assets/images/rayzart-social.webp`);
 
   const businessData = document.querySelector('script[type="application/ld+json"]');
-  if (!businessData) return;
+  if (businessData) {
+    try {
+      const details = JSON.parse(businessData.textContent || "{}");
+      details["@context"] = "https://schema.org";
+      details["@type"] = "LocalBusiness";
+      details["@id"] = `${publicUrl}#business`;
+      details.name = cfg.businessName || "Rayzart Diversified Services LLC";
+      details.legalName = "Rayzart Diversified Services LLC";
+      details.alternateName = "Rayzart LLC";
+      details.url = publicUrl;
+      details.telephone = "+1-208-691-2496";
+      details.email = cfg.publicEmail || "bill@rayzartllc.com";
+      details.description = "Local trailer rentals, delivery and hauling serving Hauser, Post Falls, Coeur d'Alene, North Idaho and the Spokane area.";
+      details.logo = `${publicUrl}assets/images/rayzart-logo.png`;
+      details.image = `${publicUrl}assets/images/rayzart-social.webp`;
+      details.priceRange = "$$";
+      details.address = {
+        "@type": "PostalAddress",
+        addressLocality: "Hauser",
+        addressRegion: "ID",
+        addressCountry: "US"
+      };
+      details.areaServed = [
+        { "@type": "City", name: "Hauser, Idaho" },
+        { "@type": "City", name: "Post Falls, Idaho" },
+        { "@type": "City", name: "Coeur d'Alene, Idaho" },
+        { "@type": "City", name: "Hayden, Idaho" },
+        { "@type": "City", name: "Rathdrum, Idaho" },
+        { "@type": "City", name: "Spokane Valley, Washington" },
+        { "@type": "City", name: "Spokane, Washington" }
+      ];
+      details.hasOfferCatalog = {
+        "@type": "OfferCatalog",
+        name: "Rayzart Trailer Rentals and Hauling Services",
+        itemListElement: [
+          {
+            "@type": "OfferCatalog",
+            name: "26-foot tilt-deck trailer rentals"
+          },
+          {
+            "@type": "OfferCatalog",
+            name: "Dump trailer rentals"
+          },
+          {
+            "@type": "OfferCatalog",
+            name: "Trailer delivery and hauling"
+          }
+        ]
+      };
+      businessData.textContent = JSON.stringify(details);
+    } catch {
+      // Leave the existing business information in place if it cannot be read.
+    }
+  }
 
-  try {
-    const details = JSON.parse(businessData.textContent || "{}");
-    details["@id"] = `${publicUrl}#business`;
-    details.url = publicUrl;
-    businessData.textContent = JSON.stringify(details);
-  } catch {
-    // Leave the existing business information in place if it cannot be read.
+  if (!document.getElementById("rayzart-website-schema")) {
+    const websiteData = document.createElement("script");
+    websiteData.type = "application/ld+json";
+    websiteData.id = "rayzart-website-schema";
+    websiteData.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "@id": `${publicUrl}#website`,
+      name: "Rayzart LLC",
+      alternateName: "Rayzart Diversified Services LLC",
+      url: publicUrl,
+      publisher: { "@id": `${publicUrl}#business` }
+    });
+    document.head.appendChild(websiteData);
   }
 })();
 
