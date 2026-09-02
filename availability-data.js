@@ -1,8 +1,6 @@
 window.RAYZART_AVAILABILITY = {
-  updated: "2026-09-01",
-  bookings: [
-    { trailer: "23 Deck Trailer", start: "2026-09-03", end: "2026-09-04", status: "booked" }
-  ]
+  updated: "2026-09-02",
+  bookings: []
 };
 
 (function () {
