@@ -8,6 +8,74 @@ window.RAYZART_CONFIG = {
   serviceArea: "North Idaho & the Spokane Area"
 };
 
+// Availability is business-critical and changes often. Always load a fresh copy.
+// The existing availability-data.js tag in index.html is kept as a fallback,
+// but it is prevented from overwriting the fresh copy if a browser cached it.
+(() => {
+  let availabilityValue;
+  let firstAvailabilityAssignment = true;
+  window.RAYZART_AVAILABILITY_FRESH = false;
+
+  try {
+    Object.defineProperty(window, "RAYZART_AVAILABILITY", {
+      configurable: true,
+      get() {
+        return availabilityValue;
+      },
+      set(value) {
+        if (!firstAvailabilityAssignment) return;
+        availabilityValue = value;
+        firstAvailabilityAssignment = false;
+      }
+    });
+  } catch {
+    // If an older browser cannot install the guard, the fresh request below still runs.
+  }
+
+  const freshAvailabilityUrl = `availability-data.js?fresh=${Date.now()}`;
+  document.write(
+    `<script src="${freshAvailabilityUrl}" ` +
+    `onload="window.RAYZART_AVAILABILITY_FRESH=true" ` +
+    `onerror="window.RAYZART_AVAILABILITY_FRESH=false"><\/script>`
+  );
+
+  // Never silently present possibly stale availability if the fresh request fails.
+  window.addEventListener("DOMContentLoaded", () => {
+    if (window.RAYZART_AVAILABILITY_FRESH) return;
+
+    const calendarMonth = document.getElementById("calendar-month");
+    const calendarGrid = document.getElementById("calendar-grid");
+    const calendarUpdated = document.getElementById("calendar-updated");
+    const dateCheck = document.getElementById("date-check");
+    const form = document.getElementById("availability-form");
+    const submitButton = form?.querySelector('button[type="submit"]');
+
+    if (calendarMonth) calendarMonth.textContent = "Live availability unavailable";
+    if (calendarUpdated) calendarUpdated.textContent = "Live check unavailable";
+
+    if (calendarGrid) {
+      const warning = document.createElement("div");
+      warning.className = "availability-load-warning";
+      warning.setAttribute("role", "status");
+      warning.style.gridColumn = "1 / -1";
+      warning.style.padding = "20px";
+      warning.style.textAlign = "center";
+      warning.textContent = "Live availability could not refresh. Please text Rayzart to confirm your dates.";
+      calendarGrid.replaceChildren(warning);
+    }
+
+    if (dateCheck) {
+      dateCheck.className = "date-check";
+      dateCheck.textContent = "Live availability could not refresh. Text Rayzart to confirm your dates.";
+    }
+
+    if (submitButton) {
+      submitButton.disabled = true;
+      submitButton.title = "Live availability must refresh before using the request form.";
+    }
+  }, { once: true });
+})();
+
 // Keep Google's page information tied to the public Rayzart domain.
 (() => {
   const publicUrl = "https://rayzartllc.com/";
