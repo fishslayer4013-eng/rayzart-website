@@ -147,8 +147,8 @@
     for (let day = 1; day <= daysInMonth; day += 1) {
       const date = new Date(viewMonth.getFullYear(), viewMonth.getMonth(), day, 12);
       const isoDate = dateToIso(date);
-      const dateBookings = bookingsForDate(isoDate);
       const isPast = isoDate < localToday;
+      const dateBookings = bookingsForDate(isoDate).filter(booking => !isPast || booking.status === "booked");
       const button = document.createElement("button");
       button.type = "button";
       button.className = `calendar-day${dateBookings.length ? " has-bookings" : ""}${isoDate === localToday ? " today" : ""}${isPast ? " past" : ""}`;
@@ -165,7 +165,7 @@
         dateBookings.forEach(booking => {
           const details = calendarBookingDetails(booking);
           const eventLabel = document.createElement("span");
-          eventLabel.className = `calendar-booking ${details.className}`;
+          eventLabel.className = `calendar-booking ${details.className}${isPast ? " past-rental" : ""}`;
           eventLabel.textContent = details.label;
           eventList.appendChild(eventLabel);
         });
@@ -173,7 +173,7 @@
       }
 
       const spokenStatus = dateBookings.length
-        ? dateBookings.map(booking => `${calendarBookingDetails(booking).label} booked`).join(", ")
+        ? dateBookings.map(booking => `${calendarBookingDetails(booking).label} ${isPast ? "rented" : booking.status === "booked" ? "booked" : "limited"}`).join(", ")
         : "No booking shown";
       button.setAttribute("role", "gridcell");
       button.setAttribute("aria-label", `${date.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}: ${spokenStatus}`);
