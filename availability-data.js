@@ -4,7 +4,8 @@ window.RAYZART_AVAILABILITY = {
     // Keep completed rentals visible on past calendar dates so they fade to the approved gray history style.
     // The 23 Deck returned on Sep 3 and is available again, so only Sep 2 remains as historical occupancy.
     { trailer: "23 Deck Trailer", start: "2026-09-02", end: "2026-09-02", status: "booked" },
-    { trailer: "26 Deck Trailer", start: "2026-09-03", end: "2026-09-04", status: "booked" }
+    { trailer: "26 Deck Trailer", start: "2026-09-03", end: "2026-09-04", status: "booked" },
+    { trailer: "23 Deck Trailer", start: "2026-09-04", end: "2026-09-04", status: "booked" }
   ]
 };
 
