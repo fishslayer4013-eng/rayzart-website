@@ -71,9 +71,10 @@
 
   function statusForDate(trailer, isoDate) {
     const matches = bookings.filter(booking => bookingApplies(booking, trailer, isoDate));
-    if (matches.some(booking => booking.status === "booked" && booking.trailer === trailer)) return "booked";
-    if (matches.some(booking => booking.status === "booked")) return "booked";
-    if (matches.length) return "limited";
+    const liveMatches = matches.filter(booking => booking.status !== "completed");
+    if (liveMatches.some(booking => booking.status === "booked" && booking.trailer === trailer)) return "booked";
+    if (liveMatches.some(booking => booking.status === "booked")) return "booked";
+    if (liveMatches.length) return "limited";
     return "open";
   }
 
@@ -148,7 +149,7 @@
       const date = new Date(viewMonth.getFullYear(), viewMonth.getMonth(), day, 12);
       const isoDate = dateToIso(date);
       const isPast = isoDate < localToday;
-      const dateBookings = bookingsForDate(isoDate).filter(booking => !isPast || booking.status === "booked");
+      const dateBookings = bookingsForDate(isoDate).filter(booking => booking.status === "completed" || !isPast || booking.status === "booked");
       const button = document.createElement("button");
       button.type = "button";
       button.className = `calendar-day${dateBookings.length ? " has-bookings" : ""}${isoDate === localToday ? " today" : ""}${isPast ? " past" : ""}`;
@@ -165,7 +166,8 @@
         dateBookings.forEach(booking => {
           const details = calendarBookingDetails(booking);
           const eventLabel = document.createElement("span");
-          eventLabel.className = `calendar-booking ${details.className}${isPast ? " past-rental" : ""}`;
+          const historical = isPast || booking.status === "completed";
+          eventLabel.className = `calendar-booking ${details.className}${historical ? " past-rental" : ""}`;
           eventLabel.textContent = details.label;
           eventList.appendChild(eventLabel);
         });
@@ -173,7 +175,7 @@
       }
 
       const spokenStatus = dateBookings.length
-        ? dateBookings.map(booking => `${calendarBookingDetails(booking).label} ${isPast ? "rented" : booking.status === "booked" ? "booked" : "limited"}`).join(", ")
+        ? dateBookings.map(booking => `${calendarBookingDetails(booking).label} ${isPast || booking.status === "completed" ? "rented" : booking.status === "booked" ? "booked" : "limited"}`).join(", ")
         : "No booking shown";
       button.setAttribute("role", "gridcell");
       button.setAttribute("aria-label", `${date.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}: ${spokenStatus}`);
