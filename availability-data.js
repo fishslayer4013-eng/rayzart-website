@@ -4,7 +4,7 @@ window.RAYZART_AVAILABILITY = {
     // Completed rentals keep their true rental dates for gray calendar history but do not block live availability.
     { trailer: "23 Deck Trailer", start: "2026-09-02", end: "2026-09-03", status: "completed" },
     { trailer: "26 Deck Trailer", start: "2026-09-03", end: "2026-09-04", status: "completed" },
-    { trailer: "23 Deck Trailer", start: "2026-09-04", end: "2026-09-04", status: "booked" }
+    { trailer: "23 Deck Trailer", start: "2026-09-04", end: "2026-09-04", status: "completed" }
   ]
 };
 
