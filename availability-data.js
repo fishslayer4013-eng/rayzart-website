@@ -1,16 +1,38 @@
-window.RAYZART_AVAILABILITY = {
-  updated: "2026-09-04",
-  bookings: [
-    // Completed rentals keep their true rental dates for gray calendar history but do not block live availability.
-    { trailer: "23 Deck Trailer", start: "2026-09-02", end: "2026-09-03", status: "completed" },
-    { trailer: "26 Deck Trailer", start: "2026-09-03", end: "2026-09-04", status: "completed" },
-    { trailer: "23 Deck Trailer", start: "2026-09-04", end: "2026-09-04", status: "completed" },
-    { trailer: "26 Dump Trailer", start: "2026-09-04", end: "2026-09-05", status: "booked" },
-    { trailer: "26 Dump Trailer", start: "2026-09-07", end: "2026-09-11", status: "booked" }
-  ]
-};
-
 (function () {
+  const data = {
+    updated: "2026-09-06",
+    bookings: [
+      // Completed rentals keep their true rental dates for gray calendar history but do not block live availability.
+      { trailer: "23 Deck Trailer", start: "2026-09-02", end: "2026-09-03", status: "completed" },
+      { trailer: "26 Deck Trailer", start: "2026-09-03", end: "2026-09-04", status: "completed" },
+      { trailer: "23 Deck Trailer", start: "2026-09-04", end: "2026-09-04", status: "completed" },
+      { trailer: "26 Dump Trailer", start: "2026-09-04", end: "2026-09-05", status: "booked" },
+      { trailer: "23 Deck Trailer", start: "2026-09-05", end: "2026-09-06", status: "booked" },
+      { trailer: "26 Dump Trailer", start: "2026-09-07", end: "2026-09-11", status: "booked" }
+    ]
+  };
+
+  // site.config.js requests this file with ?fresh=<timestamp> and index.html also
+  // keeps a fallback copy. Some mobile browsers can finish those two requests in
+  // the opposite order. A fresh response must always win, regardless of load order.
+  const scriptSrc = (document.currentScript && document.currentScript.src) || "";
+  const isFreshRequest = scriptSrc.indexOf("fresh=") !== -1;
+
+  if (isFreshRequest) {
+    try {
+      Object.defineProperty(window, "RAYZART_AVAILABILITY", {
+        configurable: true,
+        writable: true,
+        value: data
+      });
+    } catch {
+      window.RAYZART_AVAILABILITY = data;
+    }
+    window.RAYZART_AVAILABILITY_FRESH_DATA = true;
+  } else if (!window.RAYZART_AVAILABILITY_FRESH_DATA) {
+    window.RAYZART_AVAILABILITY = data;
+  }
+
   if (document.getElementById("rayzart-calendar-sizing")) return;
   var style = document.createElement("style");
   style.id = "rayzart-calendar-sizing";
