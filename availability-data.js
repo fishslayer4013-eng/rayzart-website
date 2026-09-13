@@ -1,6 +1,6 @@
 (function () {
   const data = {
-    updated: "2026-09-12",
+    updated: "2026-09-13",
     bookings: [
       // Completed rentals keep their true rental dates for gray calendar history but do not block live availability.
       { trailer: "23 Deck Trailer", start: "2026-09-04", end: "2026-09-04", status: "completed" },
@@ -8,7 +8,8 @@
       { trailer: "23 Deck Trailer", start: "2026-09-05", end: "2026-09-06", status: "completed" },
       { trailer: "26 Deck Trailer", start: "2026-09-06", end: "2026-09-07", status: "completed" },
       { trailer: "23 Deck Trailer", start: "2026-09-06", end: "2026-09-06", status: "completed" },
-      { trailer: "23 Deck Trailer", start: "2026-09-11", end: "2026-09-12", status: "completed" }
+      { trailer: "23 Deck Trailer", start: "2026-09-11", end: "2026-09-12", status: "completed" },
+      { trailer: "26 Dump Trailer", start: "2026-09-21", end: "2026-09-21", status: "booked" }
     ]
   };
 
