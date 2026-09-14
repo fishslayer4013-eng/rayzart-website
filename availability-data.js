@@ -9,8 +9,8 @@
       { trailer: "26 Deck Trailer", start: "2026-09-06", end: "2026-09-07", status: "completed" },
       { trailer: "23 Deck Trailer", start: "2026-09-06", end: "2026-09-06", status: "completed" },
       { trailer: "23 Deck Trailer", start: "2026-09-11", end: "2026-09-12", status: "completed" },
-      // Protective block restored from RBMS 2.1 so the public site does not show the dump trailer available today.
-      { trailer: "26 Dump Trailer", start: "2026-09-14", end: "2026-09-14", status: "booked" },
+      // Rick Lycksell dump-trailer rental: pickup Sep 14 at 11:30 AM, expected back Sep 15 about 5 PM.
+      { trailer: "26 Dump Trailer", start: "2026-09-14", end: "2026-09-15", status: "booked" },
       { trailer: "26 Dump Trailer", start: "2026-09-21", end: "2026-09-21", status: "booked" }
     ]
   };
