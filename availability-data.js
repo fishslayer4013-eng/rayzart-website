@@ -1,6 +1,6 @@
 (function () {
   const data = {
-    updated: "2026-09-13",
+    updated: "2026-09-14",
     bookings: [
       // Completed rentals keep their true rental dates for gray calendar history but do not block live availability.
       { trailer: "23 Deck Trailer", start: "2026-09-04", end: "2026-09-04", status: "completed" },
@@ -9,6 +9,8 @@
       { trailer: "26 Deck Trailer", start: "2026-09-06", end: "2026-09-07", status: "completed" },
       { trailer: "23 Deck Trailer", start: "2026-09-06", end: "2026-09-06", status: "completed" },
       { trailer: "23 Deck Trailer", start: "2026-09-11", end: "2026-09-12", status: "completed" },
+      // Protective block restored from RBMS 2.1 so the public site does not show the dump trailer available today.
+      { trailer: "26 Dump Trailer", start: "2026-09-14", end: "2026-09-14", status: "booked" },
       { trailer: "26 Dump Trailer", start: "2026-09-21", end: "2026-09-21", status: "booked" }
     ]
   };
@@ -38,8 +40,6 @@
   var style = document.createElement("style");
   style.id = "rayzart-calendar-sizing";
   style.textContent = [
-    ".calendar-day{min-height:112px}",
-    ".calendar-empty{min-height:112px}",
     ".calendar-booking{font-size:0;padding:3px 1px}",
     ".calendar-booking.trailer-23::after{content:\"T1 BOOKED\";font-size:.50rem}",
     ".calendar-booking.trailer-26::after{content:\"T2 BOOKED\";font-size:.50rem}",
@@ -49,7 +49,7 @@
     ".calendar-booking.past-rental.trailer-26::after{content:\"T2 RENTED\"}",
     ".calendar-booking.past-rental.trailer-dump::after{content:\"DUMP RENTED\"}",
     ".calendar-legend .legend-past{background:#d5dbe1;border:1px solid #c5ccd3}",
-    "@media(max-width:680px){.calendar-day{min-height:104px!important}.calendar-empty{min-height:104px!important}.calendar-booking.trailer-23::after,.calendar-booking.trailer-26::after,.calendar-booking.trailer-dump::after{font-size:.44rem}}"
+    "@media(max-width:680px){.calendar-booking.trailer-23::after,.calendar-booking.trailer-26::after,.calendar-booking.trailer-dump::after{font-size:.44rem}}"
   ].join("");
   document.head.appendChild(style);
 })();
