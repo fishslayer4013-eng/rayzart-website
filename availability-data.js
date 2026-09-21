@@ -8,7 +8,6 @@
       { trailer: "26 Deck Trailer", start: "2026-09-06", end: "2026-09-07", status: "completed" },
       { trailer: "23 Deck Trailer", start: "2026-09-06", end: "2026-09-06", status: "completed" },
       { trailer: "23 Deck Trailer", start: "2026-09-11", end: "2026-09-12", status: "completed" },
-      { trailer: "26 Dump Trailer", start: "2026-09-21", end: "2026-09-21", status: "booked" },
       { trailer: "26 Dump Trailer", start: "2026-09-14", end: "2026-09-20", status: "booked" },
       { trailer: "23 Deck Trailer", start: "2026-09-17", end: "2026-09-18", status: "completed" },
       { trailer: "23 Deck Trailer", start: "2026-09-21", end: "2026-09-22", status: "booked" },
