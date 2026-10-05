@@ -1,6 +1,6 @@
 (function () {
   const data = {
-    updated: "2026-10-04",
+    updated: "2026-10-05",
     bookings: [
       { trailer: "23 Deck Trailer", start: "2026-09-04", end: "2026-09-04", status: "completed" },
       { trailer: "26 Dump Trailer", start: "2026-09-04", end: "2026-09-05", status: "booked" },
@@ -15,7 +15,7 @@
       { trailer: "23 Deck Trailer", start: "2026-09-23", end: "2026-09-24", status: "completed" },
       { trailer: "23 Deck Trailer", start: "2026-09-26", end: "2026-09-26", status: "completed" },
       { trailer: "23 Deck Trailer", start: "2026-10-04", end: "2026-10-05", status: "booked" },
-      { trailer: "26 Deck Trailer", start: "2026-10-05", end: "2026-10-05", status: "booked" },
+      { trailer: "26 Deck Trailer", start: "2026-10-05", end: "2026-10-05", status: "completed" },
       { trailer: "26 Dump Trailer", start: "2026-10-06", end: "2026-10-07", status: "booked" }
     ]
   };
