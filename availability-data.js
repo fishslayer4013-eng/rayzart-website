@@ -102,7 +102,7 @@
         "rentalState": "Scheduled",
         "precision": "Timed",
         "startAt": "2026-10-11T14:00:00-07:00",
-        "endAt": "2026-10-12T18:00:00-07:00"
+        "endAt": "2026-10-12T06:30:00-07:00"
       },
       {
         "trailer": "26 Dump Trailer",
