@@ -175,7 +175,7 @@ window.RAYZART_CONFIG = {
 // Keep public trailer names tied to the matching website calendar colors.
 (() => {
   const trailerLabelScript = document.createElement("script");
-  trailerLabelScript.src = "assets/trailer-public-labels.js?v=20260901-1";
+  trailerLabelScript.src = "assets/trailer-public-labels.js?v=20261011-times";
   trailerLabelScript.async = false;
   document.head.appendChild(trailerLabelScript);
 })();
@@ -195,3 +195,4 @@ window.RAYZART_CONFIG = {
   badgeStyles.href = "assets/trailer-badge-layout.css?v=20260901-1";
   document.head.appendChild(badgeStyles);
 })();
+

@@ -113,36 +113,6 @@
     return String(value || "").replace(/[^\d+]/g, "");
   }
 
-  function statusForRange(physicalTrailer, start, end) {
-    if (!physicalTrailer || !start || !end || end < start) return "unknown";
-    const bookings = Array.isArray(window.RAYZART_AVAILABILITY?.bookings)
-      ? window.RAYZART_AVAILABILITY.bookings
-      : [];
-    const isDeck = physicalTrailer === "23 Deck Trailer" || physicalTrailer === "26 Deck Trailer";
-    let rangeStatus = "open";
-    const cursor = new Date(`${start}T12:00:00`);
-    const finalDate = new Date(`${end}T12:00:00`);
-
-    for (let guard = 0; cursor <= finalDate && guard < 370; guard += 1) {
-      const isoDate = [
-        cursor.getFullYear(),
-        String(cursor.getMonth() + 1).padStart(2, "0"),
-        String(cursor.getDate()).padStart(2, "0")
-      ].join("-");
-
-      const matches = bookings.filter(booking => {
-        const trailerMatches = booking.trailer === physicalTrailer || (booking.trailer === "Deck Trailers" && isDeck);
-        return trailerMatches && isoDate >= booking.start && isoDate <= booking.end;
-      });
-
-      if (matches.some(booking => booking.status === "booked")) return "booked";
-      if (matches.length) rangeStatus = "limited";
-      cursor.setDate(cursor.getDate() + 1);
-    }
-
-    return rangeStatus;
-  }
-
   function replaceFormSubmission() {
     const form = document.getElementById("availability-form");
     const status = document.getElementById("form-status");
@@ -155,23 +125,22 @@
 
       const data = new FormData(form);
       const physicalTrailer = String(data.get("trailer") || "");
-      const rangeStatus = statusForRange(
-        physicalTrailer,
-        String(data.get("startDate") || ""),
-        String(data.get("endDate") || "")
-      );
-      const calendarSummary = rangeStatus === "booked"
-        ? "Booked date shown"
-        : rangeStatus === "limited"
-          ? "Limited date shown"
-          : "No booking shown — confirmation required";
+      const times = window.RAYZART_TIMES;
+      const requested = times?.requestWindow(data.get("startDate"), data.get("pickupTime"), data.get("endDate"), data.get("returnTime"));
+      if (!requested || requested.status !== "valid" || window.RAYZART_AVAILABILITY_FRESH === false) {
+        status.textContent = requested?.reason || "Availability could not refresh. Contact Rayzart to confirm these times.";
+        return;
+      }
+      const result = times.check(physicalTrailer, data.get("startDate"), data.get("pickupTime"), data.get("endDate"), data.get("returnTime"));
+      const calendarSummary = times.summary(result.status);
 
       const request = [
         "Rayzart availability request",
         `Name: ${data.get("name")}`,
         `Phone: ${data.get("phone")}`,
         `Trailer: ${publicNameFor(physicalTrailer)}`,
-        `Dates: ${data.get("startDate")} through ${data.get("endDate")}`,
+        `Pickup: ${data.get("startDate")} ${data.get("pickupTime")} Pacific`,
+        `Return: ${data.get("endDate")} ${data.get("returnTime")} Pacific`,
         `Website calendar: ${calendarSummary}`,
         `Project: ${data.get("project") || "Not provided"}`
       ].join("\n");
@@ -208,3 +177,4 @@
     initPublicTrailerLabels();
   }
 })();
+

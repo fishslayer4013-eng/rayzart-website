@@ -1,24 +1,119 @@
 (function () {
   const data = {
-    updated: "2026-10-09",
-    bookings: [
-      { trailer: "23 Deck Trailer", start: "2026-09-04", end: "2026-09-04", status: "completed" },
-      { trailer: "26 Dump Trailer", start: "2026-09-04", end: "2026-09-05", status: "booked" },
-      { trailer: "23 Deck Trailer", start: "2026-09-05", end: "2026-09-06", status: "completed" },
-      { trailer: "26 Deck Trailer", start: "2026-09-06", end: "2026-09-07", status: "completed" },
-      { trailer: "23 Deck Trailer", start: "2026-09-06", end: "2026-09-06", status: "completed" },
-      { trailer: "23 Deck Trailer", start: "2026-09-11", end: "2026-09-12", status: "completed" },
-      { trailer: "26 Dump Trailer", start: "2026-09-14", end: "2026-09-20", status: "completed" },
-      { trailer: "23 Deck Trailer", start: "2026-09-17", end: "2026-09-18", status: "completed" },
-      { trailer: "26 Dump Trailer", start: "2026-09-21", end: "2026-09-21", status: "completed" },
-      { trailer: "23 Deck Trailer", start: "2026-09-21", end: "2026-09-22", status: "completed" },
-      { trailer: "23 Deck Trailer", start: "2026-09-23", end: "2026-09-24", status: "completed" },
-      { trailer: "23 Deck Trailer", start: "2026-09-26", end: "2026-09-26", status: "completed" },
-      { trailer: "23 Deck Trailer", start: "2026-10-04", end: "2026-10-07", status: "booked" },
-      { trailer: "26 Deck Trailer", start: "2026-10-05", end: "2026-10-05", status: "completed" },
-      { trailer: "26 Dump Trailer", start: "2026-10-06", end: "2026-10-07", status: "completed" },
-      { trailer: "23 Deck Trailer", start: "2026-10-11", end: "2026-10-12", status: "booked" },
-      { trailer: "26 Dump Trailer", start: "2026-10-12", end: "2026-10-14", status: "booked" }
+    "updated": "2026-10-11",
+    "timeZone": "America/Los_Angeles",
+    "version": 2,
+    "bookings": [
+      {
+        "trailer": "23 Deck Trailer",
+        "start": "2026-09-04",
+        "end": "2026-09-04",
+        "status": "completed"
+      },
+      {
+        "trailer": "26 Dump Trailer",
+        "start": "2026-09-04",
+        "end": "2026-09-05",
+        "status": "booked"
+      },
+      {
+        "trailer": "23 Deck Trailer",
+        "start": "2026-09-05",
+        "end": "2026-09-06",
+        "status": "completed"
+      },
+      {
+        "trailer": "26 Deck Trailer",
+        "start": "2026-09-06",
+        "end": "2026-09-07",
+        "status": "completed"
+      },
+      {
+        "trailer": "23 Deck Trailer",
+        "start": "2026-09-06",
+        "end": "2026-09-06",
+        "status": "completed"
+      },
+      {
+        "trailer": "23 Deck Trailer",
+        "start": "2026-09-11",
+        "end": "2026-09-12",
+        "status": "completed"
+      },
+      {
+        "trailer": "26 Dump Trailer",
+        "start": "2026-09-14",
+        "end": "2026-09-20",
+        "status": "completed"
+      },
+      {
+        "trailer": "23 Deck Trailer",
+        "start": "2026-09-17",
+        "end": "2026-09-18",
+        "status": "completed"
+      },
+      {
+        "trailer": "26 Dump Trailer",
+        "start": "2026-09-21",
+        "end": "2026-09-21",
+        "status": "completed"
+      },
+      {
+        "trailer": "23 Deck Trailer",
+        "start": "2026-09-21",
+        "end": "2026-09-22",
+        "status": "completed"
+      },
+      {
+        "trailer": "23 Deck Trailer",
+        "start": "2026-09-23",
+        "end": "2026-09-24",
+        "status": "completed"
+      },
+      {
+        "trailer": "23 Deck Trailer",
+        "start": "2026-09-26",
+        "end": "2026-09-26",
+        "status": "completed"
+      },
+      {
+        "trailer": "23 Deck Trailer",
+        "start": "2026-10-04",
+        "end": "2026-10-07",
+        "status": "booked"
+      },
+      {
+        "trailer": "26 Deck Trailer",
+        "start": "2026-10-05",
+        "end": "2026-10-05",
+        "status": "completed"
+      },
+      {
+        "trailer": "26 Dump Trailer",
+        "start": "2026-10-06",
+        "end": "2026-10-07",
+        "status": "completed"
+      },
+      {
+        "trailer": "23 Deck Trailer",
+        "start": "2026-10-11",
+        "end": "2026-10-12",
+        "status": "booked",
+        "rentalState": "Scheduled",
+        "precision": "Timed",
+        "startAt": "2026-10-11T14:00:00-07:00",
+        "endAt": "2026-10-12T18:00:00-07:00"
+      },
+      {
+        "trailer": "26 Dump Trailer",
+        "start": "2026-10-12",
+        "end": "2026-10-14",
+        "status": "booked",
+        "rentalState": "Active",
+        "precision": "Timed",
+        "startAt": "2026-10-12T08:30:00-07:00",
+        "endAt": "2026-10-14T15:30:00-07:00"
+      }
     ]
   };
 
@@ -57,3 +152,4 @@
   ].join("");
   document.head.appendChild(style);
 })();
+

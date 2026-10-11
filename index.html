@@ -56,10 +56,11 @@
   <meta property="og:type" content="website">
   <meta property="og:image" content="https://rayzartllc.com/assets/images/rayzart-social.webp">
   <link rel="icon" href="assets/images/rayzart-logo.png">
-  <link rel="stylesheet" href="assets/styles.css?v=20260804-2">
-  <script src="site.config.js"></script>
-  <script src="availability-data.js?v=20260903-2"></script>
-  <script defer src="assets/app.js?v=20260903-2"></script>
+  <link rel="stylesheet" href="assets/styles.css?v=20261011-times">
+  <script src="site.config.js?v=20261011-times"></script>
+  <script src="availability-data.js?v=20261011-times"></script>
+  <script src="assets/availability-times.js?v=20261011-times"></script>
+  <script defer src="assets/app.js?v=20261011-times"></script>
 
   <style>
     #dump-trailer .card-image img,
@@ -308,11 +309,12 @@
               <span><i class="legend-dump"></i>26 Dump</span>
               <span><i class="legend-past"></i>Gray — Past rental</span>
             </div>
-            <p class="calendar-note">A colored trailer label means that trailer is booked that day. Click any date to put it in the request form. Last updated <span id="calendar-updated"></span>.</p>
+            <p class="calendar-note">A colored trailer label means a booking occupies part or all of that day. Click any date to put it in the request form. Last updated <span id="calendar-updated"></span>.</p>
+            <p class="calendar-note" id="calendar-selected-times" aria-live="polite">Select a day to see booked pickup and return times in Pacific time.</p>
           </div>
 
           <div class="process">
-            <div><span>1</span><p><strong>Select dates</strong><br>Choose a trailer and project dates.</p></div>
+            <div><span>1</span><p><strong>Select dates and times</strong><br>Choose a trailer and pickup and return times.</p></div>
             <div><span>2</span><p><strong>Confirm the tow vehicle</strong><br>We verify ball size, brake controller and capacity.</p></div>
             <div><span>3</span><p><strong>Reserve</strong><br>Pickup or delivery details are finalized.</p></div>
           </div>
@@ -320,7 +322,7 @@
 
         <form class="availability-form" id="availability-form">
           <div class="form-header">
-            <strong>Check your dates</strong>
+            <strong>Check dates and times</strong>
             <span>No payment required</span>
           </div>
 
@@ -337,16 +339,27 @@
 
           <div class="form-row">
             <label>
-              Start date
+              Pickup date
               <input id="start-date" name="startDate" type="date" required>
             </label>
             <label>
-              End date
+              Return date
               <input id="end-date" name="endDate" type="date" required>
             </label>
           </div>
 
-          <p class="date-check" id="date-check" aria-live="polite">Select a trailer and dates to check the calendar.</p>
+          <div class="form-row">
+            <label>
+              Pickup time
+              <input id="pickup-time" name="pickupTime" type="time" step="60" required>
+            </label>
+            <label>
+              Return time
+              <input id="return-time" name="returnTime" type="time" step="60" required>
+            </label>
+          </div>
+          <p class="calendar-note">All pickup and return times are Pacific time (Hauser, Idaho). The calendar shows days containing a booking; enter times to check for overlap.</p>
+          <p class="date-check" id="date-check" aria-live="polite">Select a trailer and pickup and return times.</p>
 
           <label>
             What are you moving or working on?
