@@ -99,7 +99,7 @@
         "start": "2026-10-11",
         "end": "2026-10-12",
         "status": "booked",
-        "rentalState": "Scheduled",
+        "rentalState": "On Rent",
         "precision": "Timed",
         "startAt": "2026-10-11T14:00:00-07:00",
         "endAt": "2026-10-12T06:30:00-07:00"
