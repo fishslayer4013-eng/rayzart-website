@@ -98,8 +98,8 @@
         "trailer": "23 Deck Trailer",
         "start": "2026-10-11",
         "end": "2026-10-12",
-        "status": "booked",
-        "rentalState": "On Rent",
+        "status": "completed",
+        "rentalState": "Returned",
         "precision": "Timed",
         "startAt": "2026-10-11T14:00:00-07:00",
         "endAt": "2026-10-12T06:30:00-07:00"
