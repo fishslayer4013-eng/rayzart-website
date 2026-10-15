@@ -1,6 +1,6 @@
 (function () {
   const data = {
-    "updated": "2026-10-11",
+    "updated": "2026-10-15",
     "timeZone": "America/Los_Angeles",
     "version": 2,
     "bookings": [
@@ -108,8 +108,8 @@
         "trailer": "26 Dump Trailer",
         "start": "2026-10-12",
         "end": "2026-10-14",
-        "status": "booked",
-        "rentalState": "Active",
+        "status": "completed",
+        "rentalState": "Completed",
         "precision": "Timed",
         "startAt": "2026-10-12T08:30:00-07:00",
         "endAt": "2026-10-14T15:30:00-07:00"
