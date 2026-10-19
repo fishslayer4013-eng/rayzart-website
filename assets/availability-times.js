@@ -46,7 +46,9 @@
     const exactStart = instant(booking.startAt), exactEnd = instant(booking.endAt);
     const start = exactStart ?? wallTime(booking.start, "00:00");
     let end = exactEnd ?? wallTime(nextDate(booking.end || booking.start), "00:00");
-    if (ongoing && ["On Rent", "Inspection Pending"].includes(booking.rentalState)) end = Infinity;
+    // Honor a known due time while a rental is active; extend the block only once overdue.
+    if (ongoing && (booking.rentalState === "Inspection Pending" ||
+      (booking.rentalState === "On Rent" && (exactEnd === null || Date.now() >= exactEnd)))) end = Infinity;
     if (start === null || end === null || end <= start) return null;
     return { start, end };
   }
