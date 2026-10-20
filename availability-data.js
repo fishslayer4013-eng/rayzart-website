@@ -127,22 +127,22 @@
       {
         "trailer": "23 Deck Trailer",
         "start": "2026-10-19",
-        "end": "2026-10-19",
-        "status": "completed",
-        "rentalState": "Returned",
-        "precision": "Timed",
-        "startAt": "2026-10-19T13:00:00-07:00",
-        "endAt": "2026-10-19T18:00:00-07:00"
-      },
-      {
-        "trailer": "23 Deck Trailer",
-        "start": "2026-10-19",
         "end": "2026-10-20",
         "status": "booked",
         "rentalState": "On Rent",
         "precision": "Approximate",
         "startAt": "2026-10-19T17:30:00-07:00",
         "endAt": "2026-10-20T17:30:00-07:00"
+      },
+      {
+        "trailer": "23 Deck Trailer",
+        "start": "2026-10-19",
+        "end": "2026-10-19",
+        "status": "completed",
+        "rentalState": "Returned",
+        "precision": "Timed",
+        "startAt": "2026-10-19T13:00:00-07:00",
+        "endAt": "2026-10-19T18:00:00-07:00"
       }
     ]
   };
