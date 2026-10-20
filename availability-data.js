@@ -1,6 +1,6 @@
 (function () {
   const data = {
-    "updated": "2026-10-19",
+    "updated": "2026-10-20",
     "timeZone": "America/Los_Angeles",
     "version": 2,
     "bookings": [
@@ -130,7 +130,7 @@
         "end": "2026-10-20",
         "status": "booked",
         "rentalState": "On Rent",
-        "precision": "Approximate",
+        "precision": "Timed",
         "startAt": "2026-10-19T17:30:00-07:00",
         "endAt": "2026-10-20T17:30:00-07:00"
       },
@@ -142,7 +142,7 @@
         "rentalState": "Returned",
         "precision": "Timed",
         "startAt": "2026-10-19T13:00:00-07:00",
-        "endAt": "2026-10-19T18:00:00-07:00"
+        "endAt": "2026-10-19T17:00:00-07:00"
       }
     ]
   };
