@@ -1,198 +1,196 @@
 (function () {
   const data = {
-    "updated": "2026-10-30",
-    "timeZone": "America/Los_Angeles",
-    "version": 2,
-    "bookings": [
-      {
-        "trailer": "23 Deck Trailer",
-        "start": "2026-09-04",
-        "end": "2026-09-04",
-        "status": "completed"
-      },
-      {
-        "trailer": "26 Dump Trailer",
-        "start": "2026-09-04",
-        "end": "2026-09-05",
-        "status": "booked"
-      },
-      {
-        "trailer": "23 Deck Trailer",
-        "start": "2026-09-05",
-        "end": "2026-09-06",
-        "status": "completed"
-      },
-      {
-        "trailer": "26 Deck Trailer",
-        "start": "2026-09-06",
-        "end": "2026-09-07",
-        "status": "completed"
-      },
-      {
-        "trailer": "23 Deck Trailer",
-        "start": "2026-09-06",
-        "end": "2026-09-06",
-        "status": "completed"
-      },
-      {
-        "trailer": "23 Deck Trailer",
-        "start": "2026-09-11",
-        "end": "2026-09-12",
-        "status": "completed"
-      },
-      {
-        "trailer": "26 Dump Trailer",
-        "start": "2026-09-14",
-        "end": "2026-09-20",
-        "status": "completed"
-      },
-      {
-        "trailer": "23 Deck Trailer",
-        "start": "2026-09-17",
-        "end": "2026-09-18",
-        "status": "completed"
-      },
-      {
-        "trailer": "26 Dump Trailer",
-        "start": "2026-09-21",
-        "end": "2026-09-21",
-        "status": "completed"
-      },
-      {
-        "trailer": "23 Deck Trailer",
-        "start": "2026-09-21",
-        "end": "2026-09-22",
-        "status": "completed"
-      },
-      {
-        "trailer": "23 Deck Trailer",
-        "start": "2026-09-23",
-        "end": "2026-09-24",
-        "status": "completed"
-      },
-      {
-        "trailer": "23 Deck Trailer",
-        "start": "2026-09-26",
-        "end": "2026-09-26",
-        "status": "completed"
-      },
-      {
-        "trailer": "23 Deck Trailer",
-        "start": "2026-10-04",
-        "end": "2026-10-07",
-        "status": "booked"
-      },
-      {
-        "trailer": "26 Deck Trailer",
-        "start": "2026-10-05",
-        "end": "2026-10-05",
-        "status": "completed"
-      },
-      {
-        "trailer": "26 Dump Trailer",
-        "start": "2026-10-06",
-        "end": "2026-10-07",
-        "status": "completed"
-      },
-      {
-        "trailer": "23 Deck Trailer",
-        "start": "2026-10-11",
-        "end": "2026-10-12",
-        "status": "completed",
-        "rentalState": "Returned",
-        "precision": "Timed",
-        "startAt": "2026-10-11T14:00:00-07:00",
-        "endAt": "2026-10-12T06:30:00-07:00"
-      },
-      {
-        "trailer": "26 Dump Trailer",
-        "start": "2026-10-12",
-        "end": "2026-10-14",
-        "status": "completed",
-        "rentalState": "Completed",
-        "precision": "Timed",
-        "startAt": "2026-10-12T08:30:00-07:00",
-        "endAt": "2026-10-14T15:30:00-07:00"
-      },
-      {
-        "trailer": "23 Deck Trailer",
-        "start": "2026-10-16",
-        "end": "2026-10-16",
-        "status": "completed",
-        "rentalState": "Returned",
-        "precision": "Timed",
-        "startAt": "2026-10-16T08:00:00-07:00",
-        "endAt": "2026-10-16T17:00:00-07:00"
-      },
-      {
-        "trailer": "23 Deck Trailer",
-        "start": "2026-10-19",
-        "end": "2026-10-20",
-        "status": "completed",
-        "rentalState": "Returned",
-        "precision": "Timed",
-        "startAt": "2026-10-19T17:30:00-07:00",
-        "endAt": "2026-10-20T19:00:00-07:00"
-      },
-      {
-        "trailer": "23 Deck Trailer",
-        "start": "2026-10-19",
-        "end": "2026-10-19",
-        "status": "completed",
-        "rentalState": "Returned",
-        "precision": "Timed",
-        "startAt": "2026-10-19T13:00:00-07:00",
-        "endAt": "2026-10-19T17:00:00-07:00"
-      },
-      {
-        "trailer": "23 Deck Trailer",
-        "start": "2026-10-28",
-        "end": "2026-10-29",
-        "status": "booked",
-        "rentalState": "Returned - damage reported",
-        "precision": "Timed",
-        "startAt": "2026-10-28T05:00:00-07:00",
-        "endAt": "2026-10-28T15:30:00-07:00"
-      },
-      {
-        "trailer": "23 Deck Trailer",
-        "start": "2026-10-28",
-        "end": "2026-11-04",
-        "status": "booked",
-        "rentalState": "Out of service - damage/repair; shop October 29; do not rent until cleared"
-      },
-      {
-        "trailer": "26 Deck Trailer",
-        "start": "2026-10-28",
-        "end": "2026-10-29",
-        "status": "completed",
-        "rentalState": "Returned",
-        "precision": "Timed",
-        "startAt": "2026-10-28T15:30:00-07:00",
-        "endAt": "2026-10-29T17:00:00-07:00"
-      },
-      {
-        "trailer": "26 Deck Trailer",
-        "start": "2026-11-01",
-        "end": "2026-11-02",
-        "status": "booked",
-        "rentalState": "Scheduled",
-        "precision": "Timed",
-        "startAt": "2026-11-01T12:00:00-08:00",
-        "endAt": "2026-11-02T12:00:00-08:00"
-      },
-      {
-        "trailer": "26 Deck Trailer",
-        "start": "2026-11-06",
-        "end": "2026-11-06",
-        "status": "booked",
-        "rentalState": "Scheduled",
-        "precision": "Timed",
-        "startAt": "2026-11-06T07:00:00-08:00",
-        "endAt": "2026-11-06T18:00:00-08:00"
-      }
-    ]
-  };
+  "updated": "2026-11-01",
+  "timeZone": "America/Los_Angeles",
+  "version": 2,
+  "bookings": [
+    {
+      "trailer": "23 Deck Trailer",
+      "start": "2026-09-04",
+      "end": "2026-09-04",
+      "status": "completed"
+    },
+    {
+      "trailer": "26 Dump Trailer",
+      "start": "2026-09-04",
+      "end": "2026-09-05",
+      "status": "booked"
+    },
+    {
+      "trailer": "23 Deck Trailer",
+      "start": "2026-09-05",
+      "end": "2026-09-06",
+      "status": "completed"
+    },
+    {
+      "trailer": "26 Deck Trailer",
+      "start": "2026-09-06",
+      "end": "2026-09-07",
+      "status": "completed"
+    },
+    {
+      "trailer": "23 Deck Trailer",
+      "start": "2026-09-06",
+      "end": "2026-09-06",
+      "status": "completed"
+    },
+    {
+      "trailer": "23 Deck Trailer",
+      "start": "2026-09-11",
+      "end": "2026-09-12",
+      "status": "completed"
+    },
+    {
+      "trailer": "26 Dump Trailer",
+      "start": "2026-09-14",
+      "end": "2026-09-20",
+      "status": "completed"
+    },
+    {
+      "trailer": "23 Deck Trailer",
+      "start": "2026-09-17",
+      "end": "2026-09-18",
+      "status": "completed"
+    },
+    {
+      "trailer": "26 Dump Trailer",
+      "start": "2026-09-21",
+      "end": "2026-09-21",
+      "status": "completed"
+    },
+    {
+      "trailer": "23 Deck Trailer",
+      "start": "2026-09-21",
+      "end": "2026-09-22",
+      "status": "completed"
+    },
+    {
+      "trailer": "23 Deck Trailer",
+      "start": "2026-09-23",
+      "end": "2026-09-24",
+      "status": "completed"
+    },
+    {
+      "trailer": "23 Deck Trailer",
+      "start": "2026-09-26",
+      "end": "2026-09-26",
+      "status": "completed"
+    },
+    {
+      "trailer": "23 Deck Trailer",
+      "start": "2026-10-04",
+      "end": "2026-10-07",
+      "status": "booked"
+    },
+    {
+      "trailer": "26 Deck Trailer",
+      "start": "2026-10-05",
+      "end": "2026-10-05",
+      "status": "completed"
+    },
+    {
+      "trailer": "26 Dump Trailer",
+      "start": "2026-10-06",
+      "end": "2026-10-07",
+      "status": "completed"
+    },
+    {
+      "trailer": "23 Deck Trailer",
+      "start": "2026-10-11",
+      "end": "2026-10-12",
+      "status": "completed",
+      "rentalState": "Returned",
+      "precision": "Timed",
+      "startAt": "2026-10-11T14:00:00-07:00",
+      "endAt": "2026-10-12T06:30:00-07:00"
+    },
+    {
+      "trailer": "26 Dump Trailer",
+      "start": "2026-10-12",
+      "end": "2026-10-14",
+      "status": "completed",
+      "rentalState": "Completed",
+      "precision": "Timed",
+      "startAt": "2026-10-12T08:30:00-07:00",
+      "endAt": "2026-10-14T15:30:00-07:00"
+    },
+    {
+      "trailer": "23 Deck Trailer",
+      "start": "2026-10-16",
+      "end": "2026-10-16",
+      "status": "completed",
+      "rentalState": "Returned",
+      "precision": "Timed",
+      "startAt": "2026-10-16T08:00:00-07:00",
+      "endAt": "2026-10-16T17:00:00-07:00"
+    },
+    {
+      "trailer": "23 Deck Trailer",
+      "start": "2026-10-19",
+      "end": "2026-10-20",
+      "status": "completed",
+      "rentalState": "Returned",
+      "precision": "Timed",
+      "startAt": "2026-10-19T17:30:00-07:00",
+      "endAt": "2026-10-20T19:00:00-07:00"
+    },
+    {
+      "trailer": "23 Deck Trailer",
+      "start": "2026-10-19",
+      "end": "2026-10-19",
+      "status": "completed",
+      "rentalState": "Returned",
+      "precision": "Timed",
+      "startAt": "2026-10-19T13:00:00-07:00",
+      "endAt": "2026-10-19T17:00:00-07:00"
+    },
+    {
+      "trailer": "23 Deck Trailer",
+      "start": "2026-10-28",
+      "end": "2026-10-29",
+      "status": "booked",
+      "rentalState": "Returned - damage reported",
+      "precision": "Timed",
+      "startAt": "2026-10-28T05:00:00-07:00",
+      "endAt": "2026-10-28T15:30:00-07:00"
+    },
+    {
+      "trailer": "23 Deck Trailer",
+      "start": "2026-10-28",
+      "end": "2026-11-04",
+      "status": "booked",
+      "rentalState": "Out of service - damage/repair; shop October 29; do not rent until cleared"
+    },
+    {
+      "trailer": "26 Deck Trailer",
+      "start": "2026-10-28",
+      "end": "2026-10-29",
+      "status": "completed",
+      "rentalState": "Returned",
+      "precision": "Timed",
+      "startAt": "2026-10-28T15:30:00-07:00",
+      "endAt": "2026-10-29T17:00:00-07:00"
+    },
+    {
+      "trailer": "26 Deck Trailer",
+      "start": "2026-11-01",
+      "end": "2026-11-01",
+      "status": "completed",
+      "rentalState": "Returned",
+      "precision": "Date only"
+    },
+    {
+      "trailer": "26 Deck Trailer",
+      "start": "2026-11-06",
+      "end": "2026-11-06",
+      "status": "booked",
+      "rentalState": "Scheduled",
+      "precision": "Timed",
+      "startAt": "2026-11-06T07:00:00-08:00",
+      "endAt": "2026-11-06T18:00:00-08:00"
+    }
+  ]
+};
 
   const scriptSrc = (document.currentScript && document.currentScript.src) || "";
   const isFreshRequest = scriptSrc.indexOf("fresh=") !== -1;
