@@ -50,6 +50,72 @@
   const calendarUpdated = document.getElementById("calendar-updated");
   const calendarSelectedTimes = document.getElementById("calendar-selected-times");
   const dateCheck = document.getElementById("date-check");
+
+  // Avoid native mobile clock dialogs, whose confirmation control can be clipped.
+  function installTimeMenus(input, caption) {
+    if (!input) return;
+    const fieldset = document.createElement("fieldset");
+    fieldset.className = "time-field";
+    const legend = document.createElement("legend");
+    legend.textContent = caption;
+    fieldset.appendChild(legend);
+    const menus = document.createElement("div");
+    menus.className = "time-menus";
+    const makeMenu = (part, options) => {
+      const label = document.createElement("label");
+      label.textContent = part;
+      const select = document.createElement("select");
+      select.id = input.id + "-" + part.toLowerCase().replace("/", "-");
+      select.setAttribute("aria-label", caption + " " + part);
+      select.required = true;
+      const empty = document.createElement("option");
+      empty.value = "";
+      empty.textContent = "Choose";
+      select.appendChild(empty);
+      options.forEach(([value, text]) => select.add(new Option(text, value)));
+      label.appendChild(select);
+      menus.appendChild(label);
+      return select;
+    };
+    const hours = makeMenu("Hour", Array.from({ length: 12 }, (_, i) => [String(i + 1), String(i + 1)]));
+    const minutes = makeMenu("Minute", Array.from({ length: 60 }, (_, i) => {
+      const value = String(i).padStart(2, "0");
+      return [value, value];
+    }));
+    const period = makeMenu("AM/PM", [["AM", "AM"], ["PM", "PM"]]);
+    fieldset.appendChild(menus);
+    const confirmation = document.createElement("p");
+    confirmation.className = "time-selection-note";
+    confirmation.setAttribute("aria-live", "polite");
+    const existing = input.value;
+    input.type = "hidden";
+    input.required = false;
+    const oldLabel = input.closest("label");
+    oldLabel.replaceWith(fieldset);
+    fieldset.appendChild(input);
+    fieldset.appendChild(confirmation);
+    const sync = (notify = true) => {
+      const complete = hours.value && minutes.value && period.value;
+      input.value = complete
+        ? String(Number(hours.value) % 12 + (period.value === "PM" ? 12 : 0)).padStart(2, "0") + ":" + minutes.value
+        : "";
+      confirmation.textContent = complete
+        ? "Selected: " + hours.value + ":" + minutes.value + " " + period.value + " Pacific. Applied automatically."
+        : "Choose hour, minute and AM/PM. No OK button needed.";
+      if (notify) input.dispatchEvent(new Event("input", { bubbles: true }));
+    };
+    if (/^\d{2}:\d{2}$/.test(existing)) {
+      const hour = Number(existing.slice(0, 2));
+      hours.value = String(hour % 12 || 12);
+      minutes.value = existing.slice(3);
+      period.value = hour < 12 ? "AM" : "PM";
+    }
+    [hours, minutes, period].forEach(select => select.addEventListener("change", () => sync()));
+    sync(false);
+  }
+  installTimeMenus(pickupTime, "Pickup time");
+  installTimeMenus(returnTime, "Return time");
+
   const pacificToday = dateFromIso(localToday);
   const firstViewMonth = new Date(pacificToday.getFullYear(), pacificToday.getMonth(), 1);
   const lastViewMonth = new Date(pacificToday.getFullYear(), pacificToday.getMonth() + 11, 1);
@@ -88,7 +154,7 @@
     if (!dateCheck) return;
     const result = checkTimes();
     const rangeStatus = result.status;
-    returnTime?.setCustomValidity(rangeStatus === "invalid" ? result.reason : "");
+    (document.getElementById("return-time-minute") || returnTime)?.setCustomValidity(rangeStatus === "invalid" ? result.reason : "");
     dateCheck.className = "date-check";
     if (rangeStatus === "booked") {
       dateCheck.classList.add("booked");
