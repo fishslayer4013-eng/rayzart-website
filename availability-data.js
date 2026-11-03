@@ -147,7 +147,7 @@
     {
       "trailer": "23 Deck Trailer",
       "start": "2026-10-28",
-      "end": "2026-10-29",
+      "end": "2026-10-28",
       "status": "booked",
       "rentalState": "Returned - damage reported",
       "precision": "Timed",
