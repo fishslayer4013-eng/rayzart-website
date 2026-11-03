@@ -99,6 +99,10 @@
     .search-page-card strong{display:block;font-size:1.08rem;margin-bottom:7px}.search-page-card span{display:block;color:var(--muted);line-height:1.55}
     @media (max-width:680px){.search-page-grid{grid-template-columns:1fr}}
   </style>
+  <style>
+    .rental-moment{min-width:0}
+    .rental-moment + .rental-moment{margin-top:24px;padding-top:24px;border-top:1px solid #cbd7e3}
+  </style>
 </head>
 <body>
   <div id="top" aria-hidden="true"></div>
@@ -337,19 +341,12 @@
             </select>
           </label>
 
-          <div class="form-row">
-            <label>
+          <div class="rental-moment" role="group" aria-label="Pickup date and time">
+<label>
               Pickup date
               <input id="start-date" name="startDate" type="date" required>
             </label>
-            <label>
-              Return date
-              <input id="end-date" name="endDate" type="date" required>
-            </label>
-          </div>
-
-          <div class="form-row">
-            <fieldset class="time-field">
+<fieldset class="time-field">
   <legend>Pickup time</legend>
   <div class="time-menus">
     <label>Hour<select id="pickup-time-hour" aria-label="Pickup time Hour" required><option value="">Choose</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option></select></label>
@@ -359,7 +356,13 @@
   <input id="pickup-time" name="pickupTime" type="hidden">
   <p class="time-selection-note" aria-live="polite">Choose hour, minute and AM/PM. No OK button needed.</p>
 </fieldset>
-            <fieldset class="time-field">
+          </div>
+          <div class="rental-moment" role="group" aria-label="Return date and time">
+<label>
+              Return date
+              <input id="end-date" name="endDate" type="date" required>
+            </label>
+<fieldset class="time-field">
   <legend>Return time</legend>
   <div class="time-menus">
     <label>Hour<select id="return-time-hour" aria-label="Return time Hour" required><option value="">Choose</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option></select></label>
