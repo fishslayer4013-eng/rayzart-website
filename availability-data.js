@@ -1,6 +1,6 @@
 (function () {
   const data = {
-  "updated": "2026-11-03",
+  "updated": "2026-11-04",
   "timeZone": "America/Los_Angeles",
   "version": 2,
   "bookings": [
@@ -155,13 +155,6 @@
       "endAt": "2026-10-28T15:30:00-07:00"
     },
     {
-      "trailer": "23 Deck Trailer",
-      "start": "2026-10-28",
-      "end": "2026-11-04",
-      "status": "booked",
-      "rentalState": "Out of service - damage/repair; shop October 29; do not rent until cleared"
-    },
-    {
       "trailer": "26 Deck Trailer",
       "start": "2026-10-28",
       "end": "2026-10-29",
@@ -180,6 +173,15 @@
       "precision": "Timed",
       "startAt": "2026-11-06T07:00:00-08:00",
       "endAt": "2026-11-06T18:00:00-08:00"
+    },
+    {
+      "trailer": "23 Deck Trailer",
+      "start": "2026-11-04",
+      "end": "2026-11-04",
+      "status": "booked",
+      "rentalState": "Out",
+      "precision": "Pickup time pending",
+      "endAt": "2026-11-04T09:00:00-08:00"
     }
   ]
 };
