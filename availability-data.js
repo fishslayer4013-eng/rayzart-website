@@ -1,6 +1,6 @@
 (function () {
   const data = {
-  "updated": "2026-11-09",
+  "updated": "2026-11-10",
   "timeZone": "America/Los_Angeles",
   "version": 2,
   "bookings": [
@@ -175,13 +175,13 @@
     },
     {
       "trailer": "26 Dump Trailer",
-      "start": "2026-11-09",
-      "end": "2026-11-10",
+      "start": "2026-11-10",
+      "end": "2026-11-11",
       "status": "booked",
       "rentalState": "Scheduled",
-      "precision": "Approximate",
-      "startAt": "2026-11-09T16:00:00-08:00",
-      "endAt": "2026-11-10T12:00:00-08:00"
+      "precision": "Timed",
+      "startAt": "2026-11-10T15:00:00-08:00",
+      "endAt": "2026-11-11T15:00:00-08:00"
     }
   ]
 };
