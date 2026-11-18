@@ -1,6 +1,6 @@
 (function () {
   const data = {
-  "updated": "2026-11-17",
+  "updated": "2026-11-18",
   "timeZone": "America/Los_Angeles",
   "version": 2,
   "bookings": [
@@ -190,7 +190,7 @@
       "status": "booked",
       "rentalState": "Scheduled",
       "precision": "Timed",
-      "startAt": "2026-11-18T07:00:00-08:00",
+      "startAt": "2026-11-18T06:30:00-08:00",
       "endAt": "2026-11-19T07:00:00-08:00"
     },
     {
