@@ -188,7 +188,7 @@
       "start": "2026-11-18",
       "end": "2026-11-19",
       "status": "booked",
-      "rentalState": "Scheduled",
+      "rentalState": "Out",
       "precision": "Timed",
       "startAt": "2026-11-18T06:30:00-08:00",
       "endAt": "2026-11-19T07:00:00-08:00"
