@@ -192,6 +192,16 @@
       "precision": "Timed",
       "startAt": "2026-11-18T07:00:00-08:00",
       "endAt": "2026-11-19T07:00:00-08:00"
+    },
+    {
+      "trailer": "23 Deck Trailer",
+      "start": "2026-11-24",
+      "end": "2026-11-25",
+      "status": "booked",
+      "rentalState": "Booked",
+      "precision": "Timed",
+      "startAt": "2026-11-24T14:00:00-08:00",
+      "endAt": "2026-11-25T18:00:00-08:00"
     }
   ]
 };
