@@ -1,6 +1,6 @@
 (function () {
   const data = {
-  "updated": "2026-11-18",
+  "updated": "2026-11-19",
   "timeZone": "America/Los_Angeles",
   "version": 2,
   "bookings": [
@@ -187,8 +187,8 @@
       "trailer": "23 Deck Trailer",
       "start": "2026-11-18",
       "end": "2026-11-19",
-      "status": "booked",
-      "rentalState": "Out",
+      "status": "completed",
+      "rentalState": "Returned",
       "precision": "Timed",
       "startAt": "2026-11-18T06:30:00-08:00",
       "endAt": "2026-11-19T07:00:00-08:00"
