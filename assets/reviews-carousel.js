@@ -1,5 +1,10 @@
 (() => {
   const reviews = [
+    {"name":"Arther Curson","date":"","source":"Google customer review","text":"Great to work with! We had a company truck break down and he provided us with a trailer very quickly."},
+    {"name":"dan clavel","date":"","source":"Google customer review","text":"Awesome guy to rent from. Friendly and easy to work with."},
+    {"name":"Rob Schulhoff","date":"","source":"Google customer review","text":"Great guy goes above and beyond nice equipment service regularly always ready to go love it."},
+    {"name":"Jon Elford","date":"","source":"Google customer review","text":"Great experience! Nice trailer and great service! Highly recommended."},
+    {"name":"Rory Davis","date":"","source":"Google customer review","text":"Trailer was super nice and had all the features to make loading and strapping my truck down hassle free"},
     {
       name: "Lloan Farias",
       date: "August 20, 2026",
@@ -83,7 +88,7 @@
         <blockquote>“${review.text}”</blockquote>
         <div class="review-source">
           <strong>${review.name}</strong>
-          <span>${review.source} • ${review.date}</span>
+          <span>${review.source}${review.date ? ` • ${review.date}` : ""}</span>
         </div>
       `;
       track.appendChild(article);
