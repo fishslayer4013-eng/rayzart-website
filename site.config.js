@@ -175,7 +175,7 @@ window.RAYZART_CONFIG = {
 // Keep public trailer names tied to the matching website calendar colors.
 (() => {
   const trailerLabelScript = document.createElement("script");
-  trailerLabelScript.src = "assets/trailer-public-labels.js?v=20261011-times";
+  trailerLabelScript.src = "assets/trailer-public-labels.js?v=20261123-single-handler";
   trailerLabelScript.async = false;
   document.head.appendChild(trailerLabelScript);
 })();
