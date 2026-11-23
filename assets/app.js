@@ -308,7 +308,7 @@
       `Rayzart availability request`,
       `Name: ${data.get("name")}`,
       `Phone: ${data.get("phone")}`,
-      `Trailer: ${data.get("trailer")}`,
+      `Trailer: ${trailerSelect?.selectedOptions[0]?.textContent || data.get("trailer")}`,
       `Pickup: ${data.get("startDate")} ${data.get("pickupTime")} Pacific`,
       `Return: ${data.get("endDate")} ${data.get("returnTime")} Pacific`,
       `Website calendar: ${calendarSummary}`,
