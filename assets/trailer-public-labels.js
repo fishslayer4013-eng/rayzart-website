@@ -103,72 +103,12 @@
     });
   }
 
-  function isLikelyMobileDevice() {
-    const userAgent = navigator.userAgent || "";
-    const isAppleTouchDevice = /Macintosh/.test(userAgent) && navigator.maxTouchPoints > 1;
-    return /Android|iPhone|iPad|iPod|Windows Phone/i.test(userAgent) || isAppleTouchDevice;
-  }
-
-  function cleanPhone(value) {
-    return String(value || "").replace(/[^\d+]/g, "");
-  }
-
-  function replaceFormSubmission() {
-    const form = document.getElementById("availability-form");
-    const status = document.getElementById("form-status");
-    if (!form || !status || form.dataset.publicTrailerHandler === "true") return;
-
-    form.dataset.publicTrailerHandler = "true";
-    form.addEventListener("submit", async event => {
-      event.preventDefault();
-      event.stopImmediatePropagation();
-
-      const data = new FormData(form);
-      const physicalTrailer = String(data.get("trailer") || "");
-      const times = window.RAYZART_TIMES;
-      const requested = times?.requestWindow(data.get("startDate"), data.get("pickupTime"), data.get("endDate"), data.get("returnTime"));
-      if (!requested || requested.status !== "valid" || window.RAYZART_AVAILABILITY_FRESH === false) {
-        status.textContent = requested?.reason || "Availability could not refresh. Contact Rayzart to confirm these times.";
-        return;
-      }
-      const result = times.check(physicalTrailer, data.get("startDate"), data.get("pickupTime"), data.get("endDate"), data.get("returnTime"));
-      const calendarSummary = times.summary(result.status);
-
-      const request = [
-        "Rayzart availability request",
-        `Name: ${data.get("name")}`,
-        `Phone: ${data.get("phone")}`,
-        `Trailer: ${publicNameFor(physicalTrailer)}`,
-        `Pickup: ${data.get("startDate")} ${data.get("pickupTime")} Pacific`,
-        `Return: ${data.get("endDate")} ${data.get("returnTime")} Pacific`,
-        `Website calendar: ${calendarSummary}`,
-        `Project: ${data.get("project") || "Not provided"}`
-      ].join("\n");
-
-      const phone = cleanPhone(window.RAYZART_CONFIG?.publicPhone);
-      if (phone && isLikelyMobileDevice()) {
-        window.location.href = `sms:${phone}?&body=${encodeURIComponent(request)}`;
-        status.textContent = "Your text message is ready. Sending it does not confirm the reservation.";
-        return;
-      }
-
-      const desktopRequest = `${request}\n\nSend to Rayzart at ${window.RAYZART_CONFIG?.publicPhone || "208-691-2496"}`;
-      try {
-        await navigator.clipboard.writeText(desktopRequest);
-        status.textContent = `Request copied. Send it by text to ${window.RAYZART_CONFIG?.publicPhone || "208-691-2496"}.`;
-      } catch {
-        status.textContent = `Request prepared. Send it by text to ${window.RAYZART_CONFIG?.publicPhone || "208-691-2496"}.`;
-      }
-    }, true);
-  }
-
   function initPublicTrailerLabels() {
     applyCardLabels();
     applyFormLabels();
     applyLegendLabels();
     applyCalendarLabels();
     wireCalendarNavigation();
-    replaceFormSubmission();
   }
 
   if (document.readyState === "loading") {
