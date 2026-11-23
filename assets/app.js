@@ -276,14 +276,7 @@
       const type = link.dataset.contact;
       if (phone && type === "call") link.href = `tel:${phone}`;
       else if (phone && type === "text") {
-        if (smsCapable) link.href = `sms:${phone}`;
-        else {
-          link.href = "#contact";
-          link.title = `Text Rayzart at ${cfg.publicPhone} from your phone`;
-          if (link.textContent.trim().toLowerCase().startsWith("text")) {
-            link.textContent = `Text ${cfg.publicPhone}`;
-          }
-        }
+        link.href = `sms:${phone}`;
       }
       else if (email && type === "email") link.href = `mailto:${email}`;
       else link.href = "#contact";
