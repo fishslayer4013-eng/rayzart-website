@@ -316,19 +316,58 @@
     ].join("\n");
 
     const phone = cleanPhone(cfg.publicPhone);
-    if (phone && smsCapable) {
-      window.location.href = `sms:${phone}?&body=${encodeURIComponent(request)}`;
-      status.textContent = "Your text message is ready. Sending it does not confirm the reservation.";
-      return;
-    }
+    const email = String(cfg.publicEmail || "").trim();
+    document.getElementById("prepared-request")?.remove();
+    const preview = document.createElement("section");
+    preview.id = "prepared-request";
+    preview.setAttribute("aria-label", "Your prepared availability request");
 
-    const desktopRequest = `${request}\n\nSend to Rayzart at ${cfg.publicPhone}`;
-    try {
-      await navigator.clipboard.writeText(desktopRequest);
-      status.textContent = `Request copied. Send it by text to ${cfg.publicPhone}.`;
-    } catch {
-      status.textContent = `Request prepared. Send it by text to ${cfg.publicPhone}.`;
+    const heading = document.createElement("h3");
+    heading.textContent = "Your request is ready to send";
+    const instructions = document.createElement("p");
+    instructions.textContent = "Nothing has been sent yet. Choose Text or Email below, then send the message in your app. Rayzart will reply to confirm availability.";
+    const label = document.createElement("label");
+    label.textContent = "Request message";
+    const message = document.createElement("textarea");
+    message.readOnly = true;
+    message.rows = 12;
+    message.value = request;
+    label.appendChild(message);
+    const actions = document.createElement("div");
+    actions.className = "hero-actions";
+
+    if (phone) {
+      const textLink = document.createElement("a");
+      textLink.className = "button button-primary";
+      textLink.textContent = "Text this request";
+      textLink.href = `sms:${phone}?body=${encodeURIComponent(request)}`;
+      actions.appendChild(textLink);
     }
+    if (email) {
+      const emailLink = document.createElement("a");
+      emailLink.className = "button button-primary";
+      emailLink.textContent = "Email this request";
+      emailLink.href = `mailto:${email}?subject=${encodeURIComponent("Rayzart availability request")}&body=${encodeURIComponent(request)}`;
+      actions.appendChild(emailLink);
+    }
+    const copyButton = document.createElement("button");
+    copyButton.type = "button";
+    copyButton.className = "button button-primary";
+    copyButton.textContent = "Copy request";
+    copyButton.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(request);
+        status.textContent = `Request copied. Paste it into a text to ${cfg.publicPhone} or an email to ${email} and send it.`;
+      } catch {
+        message.focus();
+        message.select();
+        status.textContent = "Automatic copying is unavailable. Copy the selected request message, then send it by text or email.";
+      }
+    });
+    actions.appendChild(copyButton);
+    preview.append(heading, instructions, label, actions);
+    status.after(preview);
+    status.textContent = "Request prepared — not sent. Use the Text or Email button below. Your reservation is not confirmed.";
+    preview.scrollIntoView({ behavior: "smooth", block: "nearest" });
   });
 })();
-
